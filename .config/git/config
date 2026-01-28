@@ -1,0 +1,29 @@
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+
+[user]
+	name = anir183
+	email = 188557785+anir183@users.noreply.github.com
+
+[init]
+	defaultBranch = main
+
+[core]
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true  # use n and N to move between diff sections
+	dark = true      # or light = true, or omit for auto-detection
+	side-by-side = true
+	line-numbers = true
+
+[merge]
+	conflictStyle = zdiff3
