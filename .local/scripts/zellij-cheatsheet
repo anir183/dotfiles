@@ -1,0 +1,246 @@
+#!/usr/bin/env zsh
+
+echo '
+locked:
+	"Ctrl g" - SwitchToMode "normal"
+
+pane:
+	"left" - MoveFocus "left"
+	"down" - MoveFocus "down"
+	"up" - MoveFocus "up"
+	"right" - MoveFocus "right"
+	"c" - SwitchToMode "renamepane" PaneNameInput 0
+	"d" - NewPane "down" SwitchToMode "normal"
+	"e" - TogglePaneEmbedOrFloating SwitchToMode "normal"
+	"f" - ToggleFocusFullscreen SwitchToMode "normal"
+	"h" - MoveFocus "left"
+	"i" - TogglePanePinned SwitchToMode "normal"
+	"j" - MoveFocus "down"
+	"k" - MoveFocus "up"
+	"l" - MoveFocus "right"
+	"n" - NewPane SwitchToMode "normal"
+	"p" - SwitchFocus
+	"Ctrl p" - SwitchToMode "normal"
+	"r" - NewPane "right" SwitchToMode "normal"
+	"s" - NewPane "stacked" SwitchToMode "normal"
+	"w" - ToggleFloatingPanes SwitchToMode "normal"
+	"z" - TogglePaneFrames SwitchToMode "normal"
+
+tab:
+	"left" - GoToPreviousTab
+	"down" - GoToNextTab
+	"up" - GoToPreviousTab
+	"right" - GoToNextTab
+	"1" - GoToTab 1 SwitchToMode "normal"
+	"2" - GoToTab 2 SwitchToMode "normal"
+	"3" - GoToTab 3 SwitchToMode "normal"
+	"4" - GoToTab 4 SwitchToMode "normal"
+	"5" - GoToTab 5 SwitchToMode "normal"
+	"6" - GoToTab 6 SwitchToMode "normal"
+	"7" - GoToTab 7 SwitchToMode "normal"
+	"8" - GoToTab 8 SwitchToMode "normal"
+	"9" - GoToTab 9 SwitchToMode "normal"
+	"[" - BreakPaneLeft SwitchToMode "normal"
+	"]" - BreakPaneRight SwitchToMode "normal"
+	"b" - BreakPane SwitchToMode "normal"
+	"h" - GoToPreviousTab
+	"j" - GoToNextTab
+	"k" - GoToPreviousTab
+	"l" - GoToNextTab
+	"n" - NewTab SwitchToMode "normal"
+	"r" - SwitchToMode "renametab" TabNameInput 0
+	"s" - ToggleActiveSyncTab SwitchToMode "normal"
+	"Ctrl t" - SwitchToMode "normal"
+	"x" - CloseTab SwitchToMode "normal"
+	"tab" - ToggleTab
+
+resize:
+	"left" - Resize "Increase left"
+	"down" - Resize "Increase down"
+	"up" - Resize "Increase up"
+	"right" - Resize "Increase right"
+	"+" - Resize "Increase"
+	"-" - Resize "Decrease"
+	"=" - Resize "Increase"
+	"H" - Resize "Decrease left"
+	"J" - Resize "Decrease down"
+	"K" - Resize "Decrease up"
+	"L" - Resize "Decrease right"
+	"h" - Resize "Increase left"
+	"j" - Resize "Increase down"
+	"k" - Resize "Increase up"
+	"l" - Resize "Increase right"
+	"Ctrl n" - SwitchToMode "normal"
+
+move:
+	"left" - MovePane "left"
+	"down" - MovePane "down"
+	"up" - MovePane "up"
+	"right" - MovePane "right"
+	"h" - MovePane "left"
+	"Ctrl h" - SwitchToMode "normal"
+	"j" - MovePane "down"
+	"k" - MovePane "up"
+	"l" - MovePane "right"
+	"n" - MovePane
+	"p" - MovePaneBackwards
+	"tab" - MovePane
+
+scroll:
+	"e" - EditScrollback SwitchToMode "normal"
+	"s" - SwitchToMode "entersearch" SearchInput 0
+
+search:
+	"c" - SearchToggleOption "CaseSensitivity"
+	"n" - Search "down"
+	"o" - SearchToggleOption "WholeWord"
+	"p" - Search "up"
+	"w" - SearchToggleOption "Wrap"
+
+session:
+	"a":
+		LaunchOrFocusPlugin "zellij:about":
+			floating true
+			move_to_focused_tab true
+	
+		SwitchToMode "normal"
+
+	"c":
+		LaunchOrFocusPlugin "configuration":
+			floating true
+			move_to_focused_tab true
+	
+		SwitchToMode "normal"
+
+	"Ctrl o" - SwitchToMode "normal"
+	"p":
+		LaunchOrFocusPlugin "plugin-manager":
+			floating true
+			move_to_focused_tab true
+	
+		SwitchToMode "normal"
+
+	"s":
+		LaunchOrFocusPlugin "zellij:share":
+			floating true
+			move_to_focused_tab true
+	
+		SwitchToMode "normal"
+
+	"w":
+		LaunchOrFocusPlugin "session-manager":
+			floating true
+			move_to_focused_tab true
+	
+		SwitchToMode "normal"
+
+
+shared_except "locked":
+	"Alt left" - MoveFocusOrTab "left"
+	"Alt down" - MoveFocus "down"
+	"Alt up" - MoveFocus "up"
+	"Alt right" - MoveFocusOrTab "right"
+	"Alt +" - Resize "Increase"
+	"Alt -" - Resize "Decrease"
+	"Alt =" - Resize "Increase"
+	"Alt [" - PreviousSwapLayout
+	"Alt ]" - NextSwapLayout
+	"Alt f" - ToggleFloatingPanes
+	"Ctrl g" - SwitchToMode "locked"
+	"Alt h" - MoveFocusOrTab "left"
+	"Alt i" - MoveTab "left"
+	"Alt j" - MoveFocus "down"
+	"Alt k" - MoveFocus "up"
+	"Alt l" - MoveFocusOrTab "right"
+	"Alt n" - NewPane
+	"Alt o" - MoveTab "right"
+	"Alt p" - TogglePaneInGroup
+	"Alt Shift p" - ToggleGroupMarking
+	"Ctrl q" - Quit
+
+shared_except "locked" "move":
+	"Ctrl h" - SwitchToMode "move"
+
+shared_except "locked" "session":
+	"Ctrl o" - SwitchToMode "session"
+
+shared_except "locked" "scroll" "search" "tmux":
+	"Ctrl b" - SwitchToMode "tmux"
+
+shared_except "locked" "scroll" "search":
+	"Ctrl s" - SwitchToMode "scroll"
+
+shared_except "locked" "tab":
+	"Ctrl t" - SwitchToMode "tab"
+
+shared_except "locked" "pane":
+	"Ctrl p" - SwitchToMode "pane"
+
+shared_except "locked" "resize":
+	"Ctrl n" - SwitchToMode "resize"
+
+shared_except "normal" "locked" "entersearch":
+	"enter" - SwitchToMode "normal"
+
+shared_except "normal" "locked" "entersearch" "renametab" "renamepane":
+	"esc" - SwitchToMode "normal"
+
+shared_among "pane" "tmux":
+	"x" - CloseFocus SwitchToMode "normal"
+
+shared_among "scroll" "search":
+	"PageDown" - PageScrollDown
+	"PageUp" - PageScrollUp
+	"left" - PageScrollUp
+	"down" - ScrollDown
+	"up" - ScrollUp
+	"right" - PageScrollDown
+	"Ctrl b" - PageScrollUp
+	"Ctrl c" - ScrollToBottom SwitchToMode "normal"
+	"d" - HalfPageScrollDown
+	"Ctrl f" - PageScrollDown
+	"h" - PageScrollUp
+	"j" - ScrollDown
+	"k" - ScrollUp
+	"l" - PageScrollDown
+	"Ctrl s" - SwitchToMode "normal"
+	"u" - HalfPageScrollUp
+
+entersearch:
+	"Ctrl c" - SwitchToMode "scroll"
+	"esc" - SwitchToMode "scroll"
+	"enter" - SwitchToMode "search"
+
+renametab:
+	"esc" - UndoRenameTab SwitchToMode "tab"
+
+shared_among "renametab" "renamepane":
+	"Ctrl c" - SwitchToMode "normal"
+
+renamepane:
+	"esc" - UndoRenamePane SwitchToMode "pane"
+
+shared_among "session" "tmux":
+	"d" - Detach
+
+tmux:
+	"left" - MoveFocus "left" SwitchToMode "normal"
+	"down" - MoveFocus "down" SwitchToMode "normal"
+	"up" - MoveFocus "up" SwitchToMode "normal"
+	"right" - MoveFocus "right" SwitchToMode "normal"
+	"space" - NextSwapLayout
+	"\"" - NewPane "down" SwitchToMode "normal"
+	"%" - NewPane "right" SwitchToMode "normal"
+	"," - SwitchToMode "renametab"
+	"[" - SwitchToMode "scroll"
+	"Ctrl b" - Write 2 SwitchToMode "normal"
+	"c" - NewTab SwitchToMode "normal"
+	"h" - MoveFocus "left" SwitchToMode "normal"
+	"j" - MoveFocus "down" SwitchToMode "normal"
+	"k" - MoveFocus "up" SwitchToMode "normal"
+	"l" - MoveFocus "right" SwitchToMode "normal"
+	"n" - GoToNextTab SwitchToMode "normal"
+	"o" - FocusNextPane
+	"p" - GoToPreviousTab SwitchToMode "normal"
+	"z" - ToggleFocusFullscreen SwitchToMode "normal"
+' | bat -l yaml
