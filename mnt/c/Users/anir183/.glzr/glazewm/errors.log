@@ -1,0 +1,13 @@
+[2m2025-12-27T08:01:38.093431Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m found unknown escape character at line 145 column 44, while parsing a quoted scalar at line 52 column 12
+[2m2025-12-31T09:51:32.165076Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m No displayed workspace.
+[2m2026-01-02T12:14:05.799518Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m No displayed workspace.
+[2m2026-01-02T12:18:33.818952Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m No displayed workspace.
+[2m2026-01-02T12:18:35.170741Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m No displayed workspace.
+[2m2026-01-02T12:18:43.909827Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m No displayed workspace.
+[2m2026-01-03T14:44:35.314732Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m No displayed workspace.
+[2m2026-01-09T18:01:50.976143Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m Another instance of the application is already running.
+[2m2026-01-14T13:38:13.655393Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m No displayed workspace.
+[2m2026-01-22T06:46:19.185386Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m No displayed workspace.
+[2m2026-01-22T06:46:24.083728Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m Failed to send response: channel closed
+[2m2026-01-22T06:46:24.083808Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m Failed to send response: channel closed
+[2m2026-01-22T06:46:32.826664Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m No displayed workspace.
