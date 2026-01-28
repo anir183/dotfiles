@@ -1,0 +1,4 @@
+[2m2025-12-27T08:11:19.351787Z[0m [31mERROR[0m [2mzebar::widget_factory[0m[2m:[0m Failed to start widget on startup: No widget pack found for 'attaquer-modified'.
+[2m2025-12-27T08:14:45.998586Z[0m [31mERROR[0m [2mzebar::widget_factory[0m[2m:[0m Failed to start widget on startup: No widget pack found for 'overline-zebar'.
+[2m2025-12-27T08:22:57.736410Z[0m [31mERROR[0m [2mzebar::widget_factory[0m[2m:[0m Failed to start widget on startup: No widget pack found for 'overline-zebar'.
+[2m2025-12-27T08:25:18.862692Z[0m [31mERROR[0m [2mzebar::widget_factory[0m[2m:[0m Failed to start widget on startup: No widget pack found for 'overline-zebar'.
