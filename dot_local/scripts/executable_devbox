@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+export DEVBOX_EXEC_DIR=$(pwd)
+local script_dir=${0:a:h}
+
+cd $script_dir
+. ./devbox.d/devbox.zsh $@
+cd $exec_dir
