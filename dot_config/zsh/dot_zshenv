@@ -1,0 +1,12 @@
+#!/bin/zsh
+
+if [[ ! -z $container ]] && [[ ! -z $CONTAINER_ID ]] && [[ ! -z $DISTROBOX_ENTER_PATH ]]; then
+	if [[ -f $XDG_CONFIG_HOME/zsh/.zshrc.dbox.d/envs.zsh ]]; then
+		source $XDG_CONFIG_HOME/zsh/.zshrc.dbox.d/envs.zsh
+	fi
+	return
+fi
+
+if [[ -f $XDG_CONFIG_HOME/zsh/.zshrc.d/envs.zsh ]]; then
+	source $XDG_CONFIG_HOME/zsh/.zshrc.d/envs.zsh
+fi

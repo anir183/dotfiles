@@ -1,0 +1,35 @@
+#!/bin/zsh
+
+if [[ ! -z $container ]] && [[ ! -z $CONTAINER_ID ]] && [[ ! -z $DISTROBOX_ENTER_PATH ]]; then
+	if [[ ! -d "$XDG_CONFIG_HOME/zsh/.zshrc.dbox.d" ]]; then
+		return
+	fi
+
+	if [[ ! "$(ls -A $XDG_CONFIG_HOME/zsh/.zshrc.dbox.d)" ]]; then
+		return
+	fi
+
+	for file in $XDG_CONFIG_HOME/zsh/.zshrc.dbox.d/*.zsh;
+	do
+		source $file
+	done
+	return
+fi
+
+# source all rc files
+if [[ ! -d "$XDG_CONFIG_HOME/zsh/.zshrc.d" ]]; then
+	return
+fi
+
+if [[ ! "$(ls -A $XDG_CONFIG_HOME/zsh/.zshrc.d)" ]]; then
+	return
+fi
+
+for file in $XDG_CONFIG_HOME/zsh/.zshrc.d/*.zsh;
+do
+	source $file
+done
+
+# dont go ahead for auto-appended stuff
+return
+
