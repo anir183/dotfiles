@@ -27,6 +27,9 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 
 export CHROME_EXCUTABLE="/var/lib/flatpak/app/io.github.ungoogled_software.ungoogled_chromium/current/active/export/bin/io.github.ungoogled_software.ungoogled_chromium"
 
+export DOTNET_CLI_HOME="$XDG_DATA_HOME"/dotnet
+export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
+
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 
 export GO_PATH="$XDG_DATA_HOME/go"
