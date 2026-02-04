@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+local commit=$1
+local commit_no_spaces=${commit// }
+local commit_first_nine=$(echo "$commit_no_spaces" | cut -c1-8)
+echo "$commit"
+echo "$commit_first_nine"
+git worktree add -b commit-$commit_first_nine ./commit-$commit_first_nine $commit
