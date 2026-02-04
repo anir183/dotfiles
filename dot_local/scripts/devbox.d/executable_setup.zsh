@@ -138,6 +138,32 @@ function link_host_cmds() {
 # @param	<nothing>
 # @return	<nothing>
 # ---
+# enable color for pacman outputs
+function enable_pacman_color() {
+	((distrobox enter $container_name -- sudo sed -i "s/# Color/Color/I" /etc/pacman.conf) ||
+		(distrobox enter $container_name -- sudo sed -i "s/#Color/Color/I" /etc/pacman.conf)) &&
+		echo -e "\nenabled pacman color"
+	if eval $check_arch; then
+		local script_data="#!/bin/bash
+
+sudo sed -i \"s/# Color/Color/I\" /etc/pacman.conf
+sudo sed -i \"s/#Color/Color/I\" /etc/pacman.conf
+"
+		local create_script_cmd="ls $container_home/.local/scripts | grep enable_pacman_color &> /dev/null || ((echo -E '$script_data' > $container_home/.local/scripts/enable_pacman_color) && chmod +x $container_home/.local/scripts/enable_pacman_color)"
+		local run_script_cmd="distrobox enter $container_name -- bash $container_home/.local/scripts/enable_pacman_color"
+
+		cmd_run $create_script_cmd 2
+		cmd_run $run_script_cmd 2
+		echo "enabled pacman color"
+	else
+		echo "created container is not an arch image"
+		echo "skipping enabling pacman output color"
+	fi
+}
+
+# @param	<nothing>
+# @return	<nothing>
+# ---
 # enable multilib for pacman in archlinux containers
 function enable_pacman_multilib() {
 	if eval $check_arch; then
@@ -147,7 +173,6 @@ echo -e \"
 [multilib]
 Include=/etc/pacman.d/mirrorlist
 \" | sudo tee -a /etc/pacman.conf
-sudo sed -i "s/# Color/Color/I" /etc/pacman.conf
 "
 		local create_script_cmd="ls $container_home/.local/scripts | grep enable_multilib &> /dev/null || ((echo -E '$script_data' > $container_home/.local/scripts/enable_multilib) && chmod +x $container_home/.local/scripts/enable_multilib)"
 		local run_script_cmd="distrobox enter $container_name -- bash $container_home/.local/scripts/enable_multilib"
@@ -267,6 +292,8 @@ if verify_name $container_name; then
 	record_setup_container
 	echo
 	link_host_cmds
+	echo
+	enable_pacman_color
 	echo
 	enable_pacman_multilib
 	echo
