@@ -128,6 +128,7 @@ function link_cmd_from_host() {
 # ---
 # link some host commands inside of the container
 function link_host_cmds() {
+	link_cmd_from_host nautilus
 	link_cmd_from_host opencode
 	link_cmd_from_host git
 	link_cmd_from_host lazygit
@@ -146,6 +147,7 @@ echo -e \"
 [multilib]
 Include=/etc/pacman.d/mirrorlist
 \" | sudo tee -a /etc/pacman.conf
+sudo sed -i "s/# Color/Color/I" /etc/pacman.conf
 "
 		local create_script_cmd="ls $container_home/.local/scripts | grep enable_multilib &> /dev/null || ((echo -E '$script_data' > $container_home/.local/scripts/enable_multilib) && chmod +x $container_home/.local/scripts/enable_multilib)"
 		local run_script_cmd="distrobox enter $container_name -- bash $container_home/.local/scripts/enable_multilib"
