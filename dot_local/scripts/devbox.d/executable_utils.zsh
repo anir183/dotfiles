@@ -6,7 +6,7 @@ export DEVBOX_DIR=${DEVBOX_DIR:-"$HOME/.envs"}
 export DEVBOX_PREFIX=${DEVBOX_PREFIX:-"dev"}
 export DEVBOX_ISNVIDIA=${DEVBOX_ISNVIDIA:-"true"}
 export DEVBOX_INITAL_PROGRAMS=${DEVBOX_INITAL_PROGRAMS:-"zsh fd fzf ripgrep gcc clang npm 7zip make npm yazi vi nano git nvim sudo man-db man-pages"}
-export DEVBOX_ARCH_PROGRAMS=${DEVBOX_ARCH_PROGRAMS:-"debugedit fakeroot openssl pkg-config zoxide nvim perl-error perl-mailtools perl-timedate zlib-ng compiler-rt lld rust base-devel eza yazi bat tree-sitter-cli lcms2 wl-clipboard"}
+export DEVBOX_ARCH_PROGRAMS=${DEVBOX_ARCH_PROGRAMS:-"debugedit fakeroot openssl pkg-config zoxide nvim perl-error perl-mailtools perl-timedate zlib-ng compiler-rt lld rust base-devel eza yazi bat tree-sitter-cli lcms2 wl-clipboard glow"}
 
 if [[ ! -d $DEVBOX_DIR ]]; then
 	mkdir -p $DEVBOX_DIR
