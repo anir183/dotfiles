@@ -48,8 +48,6 @@ bookmarking directories for fast switching. wannabe harpoon for terminal or smth
 				opens store file in editor
 		1 | 2 | 3 | ...
 				goto dir at given index of store
-		d1 | d2 | d3 | ...
-				goto dir at given index of default store
 		l | ls | list
 				list stored dirs
 		h | help
