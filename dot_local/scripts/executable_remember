@@ -1,0 +1,354 @@
+#!/usr/bin/env zsh
+
+# NOTE : this script needs to run with ". remember [args]" to actually be able
+#        to cd... maybe add alias in shell rc files
+
+REMEMBER_STORE_DIR=${REMEMBER_STORE_DIR:-$XDG_DATA_HOME/remember}
+
+__exec_dir=$(pwd)
+__storage_file=$REMEMBER_STORE_DIR/store_default
+
+# @param	<nothing>
+# @return	<nothing>
+# ---
+# print the help menu
+function help_menu() {
+	echo "
+remember <action> [opt]
+
+bookmarking directories for fast switching. wannabe harpoon for terminal or smth.
+
+	NOTE:
+	* can't change pwd unless run as \". remember [opts]\"
+	* needs fzf
+	* REMEMBER_STORE_DIR env var to change store dir (default $XDG_DATA_HOME/remember)
+	* create .remrc file in a dir to use a custom store location for all sub directories
+	  .remrc file is expected to contain only a path (to the store file)
+
+	AVAILABLE ACTIONS:
+		<none>
+				same as: remember goto
+		go | goto
+				open fuzzy matcher to goto a stored dir
+		d | def | default
+				run any other command ignoring .remrc in default store
+				opts:
+					[cmd]: any other command
+		a | add
+				add current pwd to store
+		c | rc | create | create-rc
+				create a rc file in current directory
+		rm | remove
+				remove current pwd from store
+		rmf | remove-fuzz
+				opens fuzzy matcher to remove a dir from store
+		rma | remove-all | nuke
+				remove all stored dirs
+		e | ed | edit
+				opens store file in editor
+		1 | 2 | 3 | ...
+				goto dir at given index of store
+		d1 | d2 | d3 | ...
+				goto dir at given index of default store
+		l | ls | list
+				list stored dirs
+		h | help
+				shows this message
+
+	EXAMPLES:
+	* remember
+	* remember add
+	* remember remove
+	* etc...
+"
+}
+
+# @param	<nothing>
+# @return	<nothing>
+# ---
+# create a rc file in current dir
+function create_rc_file() {
+	local rc_file_path="$__exec_dir/.remrc"
+
+	if [ -e $rc_file_path ]; then
+		echo "rc file already exists at: $rc_file_path"
+	else
+		local store_path=""
+		vared -p "path (<enter> for xdg data): " -c name
+		store_path=$(rmv_all_spaces $store_path)
+		if [[ -z $store_path ]]; then
+			store_path="$XDG_DATA_HOME/remember/store_$(cat /dev/urandom | tr -cd "a-z0-9" | head -c 7)"
+		fi
+
+		echo "$store_path" > $rc_file_path
+		echo "created rc file at: $rc_file_path"
+	fi
+}
+
+# @param	$1			argument to remove all spaces from
+# @return	<nothing>
+# ---
+# remove all spaces from an argument including in-between ones
+function rmv_all_spaces() {
+	local str=$1
+
+	echo ${str// }
+}
+
+# @param	<nothing>
+# @return	<nothing>
+# ---
+# add a directory to the store
+function add_to_store() {
+	local check_already_exists=$(grep -Fx "$__exec_dir" "$__storage_file" 2> /dev/null)
+
+	if [ $check_already_exists ]; then
+		echo "this directory is already in the store"
+	else
+		if [[ "$(rmv_all_spaces $(cat "$__storage_file"))" == "" ]]; then
+			echo "$__exec_dir" > $__storage_file
+		else
+			echo "$__exec_dir" >> $__storage_file
+		fi
+		echo "added $__exec_dir to the store"
+	fi
+}
+
+# @param	<nothing>
+# @return	<nothing>
+# ---
+# remove current dir from store
+function remove_pwd_from_store() {
+	local dir_to_remove=$__exec_dir
+
+	local check_if_exists=$(grep -Fx "$dir_to_remove" "$__storage_file" 2> /dev/null)
+
+	if [ $check_if_exists ]; then
+		cp -f $__storage_file "$__storage_file.bak"
+		local output=$(grep -vFx "$dir_to_remove" $__storage_file)
+		echo $output > $__storage_file
+	else
+		echo "dir $__exec_dir not found in store"
+	fi
+}
+
+# @param	<nothing>
+# @return	<nothing>
+# ---
+# remove from store
+function remove_from_store() {
+	local dir_to_remove=$(cat $__storage_file | fzf)
+	if [[ "$(rmv_all_spaces $dir_to_remove)" == "" ]]; then
+		return
+	fi
+
+	local check_if_exists=$(grep -Fx "$dir_to_remove" "$__storage_file" 2> /dev/null)
+
+	if [ $check_if_exists ]; then
+		cp -f $__storage_file "$__storage_file.bak"
+		local output=$(grep -vFx "$dir_to_remove" $__storage_file)
+		echo $output > $__storage_file
+	else
+		echo "dir $dir_to_remove not found in store"
+	fi
+}
+
+# @param	<nothing>
+# @return	<nothing>
+# ---
+# remove all files from store
+function remove_all_from_store() {
+	local choice=""
+	vared -p "<enter> or <y> to confirm: " -c choice
+	case $(rmv_all_spaces $choice) in
+		"" )
+			;&
+		[yY]* )
+			echo "" > $__storage_file
+			echo "emptied store"
+			;;
+		* )
+			echo "aborting removal"
+			;;
+	esac
+}
+
+# @param	<nothing>
+# @return	<nothing>
+# ---
+# open store file in default editor
+function open_in_editor() {
+	if [[ -z $EDITOR ]]; then
+		$EDITOR $__storage_file
+	else
+		if command -v nvim &> /dev/null; then
+			nvim $__storage_file
+		elif command -v code &> /dev/null; then
+			code $__storage_file
+		elif command -v vim &> /dev/null; then
+			vim $__storage_file
+		elif command -v vi &> /dev/null; then
+			vi $__storage_file
+		elif command -v nano &> /dev/null; then
+			nano $__storage_file
+		else
+			echo "no supported editor"
+		fi
+	fi
+}
+
+# @param	<nothing>
+# @return	<nothing>
+# ---
+# go to searched directory
+function goto_dir() {
+	if [[ "$(rmv_all_spaces $(cat "$__storage_file"))" == "" ]]; then
+		echo "no directories in the store"
+	else
+		local dir_to_go=$(cat $__storage_file | fzf)
+		if [[ "$(rmv_all_spaces $dir_to_go)" == "" ]]; then
+			return
+		fi
+
+		cd $dir_to_go
+	fi
+}
+
+# @param	$1			1-based index of the dir to move to
+# @return	<nothing>
+# ---
+# goto file with index
+function goto_index() {
+	local index=1
+	local target=$1
+	while IFS='' read -r LINE || [ -n "${LINE}" ]; do
+		if [[ $(rmv_all_spaces ${LINE}) != ""  ]]; then
+			if [[ $index == $target ]]; then
+				cd $(rmv_all_spaces ${LINE})
+				return
+			else
+				index=$((index + 1))
+			fi
+		fi
+	done < $__storage_file
+
+	echo "no dir stored at index"
+}
+
+# @param	<nothing>
+# @return	<nothing>
+# ---
+# parse and user remrc if found
+function use_remrc() {
+	__find_path=$__exec_dir
+	while [[ "$__find_path" != "" && ! -e "$__find_path/.remrc" ]]; do
+		__find_path=${__find_path%/*}
+	done
+
+	if [[ "$(rmv_all_spaces $__find_path)" != ""  ]]; then
+		# first line of .remrc file
+		local potential_store_file=$(rmv_all_spaces $(head -n 1 "$__find_path/.remrc"))
+
+		if [[ "$potential_store_file" != "" ]]; then
+			# getting directory of given file path in .remrc
+			local potential_store_dir=$(dirname "$potential_store_file")
+
+			# NOTE : using /home/* instead of $HOME as i use distrobox with
+			#        custom home directories
+			#
+			# if directory is not home for user or a subdirectory
+			if [[ $potential_store_dir != /home/* ]] && [[ $potential_store_dir != $potential_store_file ]]; then
+				echo "invalid path in rc file: $__find_path/.remrc"
+				echo $potential_store_file
+				echo
+				echo "path has to be absolute and a sub-dir of $HOME"
+			else
+				REMEMBER_STORE_DIR=$potential_store_dir
+				__storage_file=$potential_store_file
+				echo "custom store file from remrc: $__storage_file"
+			fi
+		fi
+	fi
+}
+
+# === check and validate number of arguments ===
+__arg1=$(rmv_all_spaces $1)
+__arg2=$(rmv_all_spaces $2)
+if [ $# -lt 3 ]; then
+	if [[ $__arg1 != d ]] && [[ $__arg1 != "def" ]] && [[ $__arg1 != "default" ]]; then
+		use_remrc
+	else
+		__arg1=$__arg2
+	fi
+elif [ $# -gt 2 ]; then
+	echo "too many arguments"
+	echo "check docs with: remember help"
+	return
+else
+	use_remrc
+fi
+
+# === check and ensure remember data dir exits ===
+if [ ! -d $REMEMBER_STORE_DIR ]; then
+	if eval "mkdir -p $REMEMBER_STORE_DIR"; then
+		echo "created storage directory at: $REMEMBER_STORE_DIR"
+	else
+		echo "could not initiate storage directory at: $REMEMBER_STORE_DIR"
+		return
+	fi
+fi
+
+# === check and ensure remember data file exits ===
+if [ ! -f $__storage_file ]; then
+	if eval "touch $__storage_file"; then
+		echo "created storage file at: $__storage_file"
+	else
+		echo "could not initiate storage file at: $__storage_file"
+		return
+	fi
+fi
+
+
+# === handle arguments ===
+case $__arg1 in
+	"" )
+		;&
+	g|go|goto )
+		goto_dir
+		;;
+	l|ls|ll|list )
+		if command -v bat &> /dev/null; then
+			bat $__storage_file
+		else
+			cat $__storage_file
+		fi
+		;;
+	c|cr|create|rc|create-rc )
+		create_rc_file
+		;;
+	a|add|new )
+		add_to_store
+		;;
+	r|rm|remove|del|delete )
+		remove_pwd_from_store
+		;; 
+	rmf|rm-fuzz|remove-fuzz )
+		remove_from_store
+		;;
+	rma | rmx | remove-all | nuke )
+		remove_all_from_store
+		;;
+	e|ed|edit )
+		open_in_editor
+		;;
+	[0-9]* )
+		goto_index $__arg1
+		;;
+	help|h|--help )
+		help_menu
+		;;
+	* )
+		echo "invalid <action> argument"
+		echo "check docs with: remember help"
+		;;
+esac

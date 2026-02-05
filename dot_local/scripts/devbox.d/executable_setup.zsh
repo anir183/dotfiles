@@ -102,12 +102,8 @@ function setup_home_dir() {
 
 	# link neovim config and zoxide database
 	(ln -s $XDG_DATA_HOME/zoxide/ $container_home/.local/share && echo "linked zoxide database with host") || echo "could not link zoxide database with host"
+	(ln -s $XDG_DATA_HOME/remember/ $container_home/.local/share && echo "linked remember store with host") || echo "could not link remember store with host"
 	(ln -s $XDG_CONFIG_HOME/nvim/ $container_home/.config && echo "linked neovim config with host") || echo "could not link neovim config with host"
-
-	# link scripts
-	if [[ -d $HOME/.local/scripts ]]; then
-		(cp -r $HOME/.local/scripts/* $container_home/.local/scripts && echo "copied scripts from $HOME/.local/scripts") || echo "could not copy scripts from host"
-	fi
 }
 
 # @param	$1 binary to link with
@@ -129,6 +125,7 @@ function link_cmd_from_host() {
 # link some host commands inside of the container
 function link_host_cmds() {
 	link_cmd_from_host nautilus
+	link_cmd_from_host remember
 	link_cmd_from_host opencode
 	link_cmd_from_host git
 	link_cmd_from_host lazygit
