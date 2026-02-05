@@ -47,6 +47,7 @@ unset LESSCLOSE
 
 #[[ path var ]]
 PATH="/opt/cuda/bin:$PATH"
+PATH="$HOME/.local/share/npm/bin:$PATH"
 PATH="$HOME/.local/bin:$PATH"
 PATH="$HOME/.local/scripts:$PATH"
 export PATH
