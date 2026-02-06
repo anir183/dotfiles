@@ -36,6 +36,7 @@ keybind = ctrl+plus=increase_font_size:1
 keybind = ctrl+minus=decrease_font_size:1
 keybind = ctrl+zero=reset_font_size
 keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
 
 # Material 3 UI elements
 unfocused-split-opacity = 0.7
