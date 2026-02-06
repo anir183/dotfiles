@@ -86,7 +86,7 @@ input {
 
     tablet {
         // off
-        map-to-output "HDMI-A-1"
+        // map-to-output "HDMI-A-1"
         // left-handed
         // calibration-matrix 1.0 0.0 0.0 0.0 1.0 0.0
     }
@@ -116,10 +116,10 @@ input {
 // Remember to uncomment the node by removing "/-"!
 output "eDP-1" {
     // off
-    mode "1366x768@60"
-    scale 1.1 // resolution is now 1241.8 x 698.2
+    mode "1920x1080@144.003"
+    scale 1.1 // resolution is now 1745 x 981
     // transform "90"
-    position x=0 y=101 // center this screen wrt HDMI-A-1
+    position x=0 y=0 // center this screen wrt HDMI-A-1
     variable-refresh-rate on-demand=true
     // focus-at-startup
     backdrop-color "#1b121c"
@@ -142,8 +142,8 @@ output "eDP-1" {
 }
 
 output "HDMI-A-1" {
-    mode "1440x900@75"
-    position x=1242 y=0 // position on the right of eDP-1 taking scale into considerations
+    mode "1440x900@74.997"
+    position x=1745 y=40 // position on the right of eDP-1 taking scale into considerations
     variable-refresh-rate on-demand=true
     focus-at-startup
     backdrop-color "#1b121c"
