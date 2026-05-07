@@ -1,0 +1,47 @@
+#!/usr/bin/env fish
+
+#[[ neovim and vim ]]
+abbr -a vim nvim
+abbr -a mvim "nvim --cmd \"let g:MODE='minimal'\""
+abbr -a mpvim "nvim --cmd \"let g:MODE='min-plugins'\""
+abbr -a npvim "nvim --cmd \"let g:MODE='no-plugins'\""
+abbr -a rvim "/usr/bin/env vim"
+
+#[[ eza list commands ]]
+abbr -a el "eza -a"
+abbr -a ell "eza -l"
+abbr -a ela "eza -la"
+abbr -a etree "eza --tree"
+abbr -a etrea "eza --tree -a"
+
+#[[ git ]]
+abbr -a ga "git add"
+abbr -a gcom "git commit -m \""
+
+#[[ lazygit ]]
+abbr -a lg lazygit
+abbr -a lgit lazygit
+abbr -a legit lazygit
+
+#[[ distrobox ]]
+abbr -a chenv "distrobox enter"
+# abbr -a chdev "devbox enter"
+abbr -a dbox "distrobox"
+
+#[[ custom remember script ]]
+abbr -a rem remember
+abbr -a r ". remember goto"
+abbr -a r1 ". remember 1"
+abbr -a r2 ". remember 2"
+abbr -a r3 ". remember 3"
+abbr -a r4 ". remember 4"
+abbr -a r5 ". remember 5"
+abbr -a r6 ". remember 6"
+abbr -a r7 ". remember 7"
+abbr -a r8 ". remember 8"
+abbr -a r9 ". remember 9"
+abbr -a r0 ". remember 0"
+
+#[[ misc ]]
+abbr -a chist "mv $XDG_DATA_HOME/fish/fish_history $XDG_DATA_HOME/fish/fish_history.bak"
+abbr -a :q exit
