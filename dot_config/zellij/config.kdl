@@ -12,7 +12,7 @@ keybinds clear-defaults=true {
         bind "Alt Shift u" {
             SwitchToMode "normal"
             LaunchOrFocusPlugin "session-manager" {
-                floating false
+                floating true
                 move_to_focused_tab true
             }
         }
