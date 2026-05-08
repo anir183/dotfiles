@@ -35,6 +35,7 @@ set -gx LUAROCKS_CONFIG $HOME/.config/luarocks/config.lua
 set -gx WGETRC $XDG_CONFIG_HOME/wgetrc
 set -gx WGET_HSTS_FILE $XDG_DATA_HOME/wget-hsts
 
+set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME"/npm/npmrc
 
 #[[ path var ]]
 fish_add_path /opt/cuda/bin
