@@ -1,11 +1,11 @@
 #!/usr/bin/env fish
 
 #[[ neovim and vim ]]
-abbr -a vim nvim
-abbr -a mvim "nvim --cmd \"let g:MODE='minimal'\""
-abbr -a mpvim "nvim --cmd \"let g:MODE='min-plugins'\""
-abbr -a npvim "nvim --cmd \"let g:MODE='no-plugins'\""
-abbr -a rvim "/usr/bin/env vim"
+abbr -a nv nvim
+abbr -a mvim "nvim --cmd \"let g:MODE_183='minimal'\""
+abbr -a mpvim "nvim --cmd \"let g:MODE_183='minimal-plugin'\""
+abbr -a mdvim "nvim --cmd \"let g:MODE_183='minimal-dev'\""
+abbr -a npvim "nvim --cmd \"let g:MODE_183='no-plugin'\""
 
 #[[ eza list commands ]]
 abbr -a el "eza -a"
@@ -16,6 +16,7 @@ abbr -a etrea "eza --tree -a"
 
 #[[ git ]]
 abbr -a ga "git add"
+abbr -a gs "git status"
 abbr -a gcom "git commit -m \""
 
 #[[ lazygit ]]
