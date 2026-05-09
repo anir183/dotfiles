@@ -1,8 +1,6 @@
-# original by
-# name: Default
-# author: Lily Ballard
+#!/usr/bin/env fish
 
-function fish_prompt --description 'Write out the prompt'
+function fish_prompt
     set -l last_pipestatus $pipestatus
     set -lx __fish_last_status $status # Export for __fish_print_pipestatus.
     set -l normal (set_color --reset)

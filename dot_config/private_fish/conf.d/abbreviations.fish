@@ -1,7 +1,6 @@
 #!/usr/bin/env fish
 
 #[[ neovim and vim ]]
-abbr -a nv nvim
 abbr -a mvim "nvim --cmd \"let g:MODE_183='minimal'\""
 abbr -a mpvim "nvim --cmd \"let g:MODE_183='minimal-plugin'\""
 abbr -a mdvim "nvim --cmd \"let g:MODE_183='minimal-dev'\""
@@ -26,7 +25,6 @@ abbr -a legit lazygit
 
 #[[ distrobox ]]
 abbr -a chenv "distrobox enter"
-# abbr -a chdev "devbox enter"
 abbr -a dbox "distrobox"
 
 #[[ custom remember script ]]

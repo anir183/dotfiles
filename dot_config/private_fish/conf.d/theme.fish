@@ -1,9 +1,6 @@
 #!/usr/bin/env fish
 
-# Some color mappings
-# Mostly uses terminal colors (uses orange eda792 in some places)
-
-# set_color
+# mostly uses terminal colors (uses orange eda792 in some places)
 
 set -gx fish_color_autosuggestion brblack
 set -gx fish_color_cancel --reverse
