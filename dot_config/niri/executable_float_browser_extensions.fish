@@ -43,20 +43,20 @@ niri msg -j event-stream | jq --unbuffered -r '
             niri msg action toggle-window-floating --id=$id
 
             # let window settle a bit
-            sleep 0.1
+            sleep 0.15
 
             # resize
             niri msg action set-window-width  $width  --id=$id
             niri msg action set-window-height $height --id=$id
 
             # let window settle a bit
-            sleep 0.1
+            sleep 0.15
 
             # center
             niri msg action center-window --id=$id
 
             # let window settle a bit
-            sleep 0.1
+            sleep 0.15
 
             # sanity center as sometimes the window is a bit off center
             # TODO: find a better fix?
