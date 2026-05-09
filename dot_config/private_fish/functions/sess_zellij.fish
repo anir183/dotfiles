@@ -1,6 +1,10 @@
 #!/usr/bin/env fish
 
 function sess_zellij
+	if is_distrobox
+		return 1
+	end
+
 	# show help if requested
 	if test (count $argv) -gt 0
 		switch $argv[1]
