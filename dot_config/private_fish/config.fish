@@ -1,5 +1,10 @@
 # commands for interactive sessions only
 if status is-interactive
+	if is_distrobox
+		echo dbox
+		return
+	end
+
 	# luarocks paths
 	eval (luarocks path)
 
