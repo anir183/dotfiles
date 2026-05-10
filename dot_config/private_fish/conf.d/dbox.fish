@@ -15,10 +15,10 @@ if string match -q '/run/host/*' "$dir"
 end
 
 # fast node verison manager
-# fnm env --use-on-cd --shell fish | source
+fnm env --use-on-cd --shell fish | source
 
 # has to be near the end (zellij is the only exception)
-# zoxide init fish --cmd chd | source
+zoxide init fish --cmd chd | source
 
 # if [[ "$CONTAINER_ID" != "dev-flutter" ]]; then
 # 	return
