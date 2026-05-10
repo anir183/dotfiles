@@ -1,15 +1,17 @@
 #!/usr/bin/env fish
 
-function install_packages
+function install_packages --description "ensure some packages are installed"
 	# create exported global variable if missing
 	if not set -q PACKAGES_TO_INSTALL
 		set -gx PACKAGES_TO_INSTALL \
 			nvim \
 			tree-sitter-cli \
+			git \
 			bat \
 			eza \
 			fzf \
 			ripgrep \
+			zoxide \
 			fd \
 			wget \
 			curl \
@@ -41,7 +43,7 @@ function install_packages
 
 		if test $status -eq 0
 			pushd $build_dir >/dev/null
-			makepkg -si --noconfirm
+			makepkg -si
 			popd >/dev/null
 			rm -rf $build_dir
 		end

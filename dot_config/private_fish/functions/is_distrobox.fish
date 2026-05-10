@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-function is_distrobox
+function is_distrobox --description "check if inside a distrobox container, optionally with a given name"
 	if not test -n "$container"
 		return 1
 	end

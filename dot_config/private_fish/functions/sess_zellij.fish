@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-function sess_zellij
+function sess_zellij --description "list available sessions and attach"
 	if is_distrobox
 		return 1
 	end

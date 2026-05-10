@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-function link_host_bin --description "Create distrobox-host-exec wrapper binaries"
+function link_host_bin --description "link a binary from host to inside the container"
 	if not is_distrobox
 		echo "[distrobox-host-bin] not running inside a distrobox container"
 		return 1

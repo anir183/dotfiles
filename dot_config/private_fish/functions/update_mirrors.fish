@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-function update_mirrors
+function update_mirrors --description "update the mirror list using reflector"
 	set -l mirrorlist /etc/pacman.d/mirrorlist
 	set -l backup /etc/pacman.d/mirrorlist.bak
 
