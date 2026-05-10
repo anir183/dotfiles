@@ -112,6 +112,8 @@ window-rule {
 window-rule {
 	match app-id="io.github.tobagin.karere"
 	match app-id="com.discordapp.Discord"
+	match app-id="io.missioncenter.MissionCenter"
+	match app-id="yaak-app"
 	default-column-width { proportion 0.8; }
 }
 window-rule {
