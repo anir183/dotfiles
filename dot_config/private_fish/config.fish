@@ -2,18 +2,6 @@
 
 if status is-interactive
 	if is_distrobox
-		set dir (pwd)
-
-		if string match -q '/run/host/*' "$dir"
-			set realdir (string replace '/run/host' '' "$dir")
-
-			if test -d "$realdir"
-				cd "$realdir"
-			end
-		end
-
-		echo dbox
-
 		return
 	end
 
