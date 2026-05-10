@@ -375,7 +375,7 @@ default_layout "183"
 //   - true (default, enabled)
 //   - false
 // 
-pane_frames true
+pane_frames false
  
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
@@ -577,8 +577,8 @@ show_startup_tips false
 // Whether clicking a pane to focus it also sends the click into the pane
 // default is false
 // mouse_click_through false
- 
 // The ip address the web server should listen on when it starts
+ 
 // Default: "127.0.0.1"
 // (Requires restart)
 // web_server_ip "127.0.0.1"
