@@ -144,6 +144,7 @@ binds {
     Mod+Shift+M hotkey-overlay-title="mission center" repeat=false { spawn "flatpak" "run" "io.missioncenter.MissionCenter"; }
     Mod+Shift+Return hotkey-overlay-title="open browser" repeat=false { spawn "flatpak" "run" "app.zen_browser.zen"; }
     Mod+Ctrl+Shift+S repeat=false hotkey-overlay-title="gradia screenshot" { spawn "sh" "-c" "flatpak run be.alexandervanhee.gradia"; }
+    Mod+Shift+Comma repeat=false hotkey-overlay-title="emoji picker" { spawn "flatpak" "run" "it.mijorus.smile"; }
     Mod+D repeat=false { toggle-overview; }
     Mod+Escape repeat=false allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
     Mod+Shift+Slash repeat=false { show-hotkey-overlay; }

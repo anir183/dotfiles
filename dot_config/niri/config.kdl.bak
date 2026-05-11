@@ -717,6 +717,7 @@ binds {
     Mod+Ctrl+Shift+S repeat=false {
         spawn "flatpak" "run" "be.alexandervanhee.gradia" "--screenshot=INTERACTIVE"
     }
+    Mod+Ctrl+Shift+S repeat=false hotkey-overlay-title="gradia screenshot" { spawn "sh" "-c" "flatpak run be.alexandervanhee.gradia"; }
 
     // === System Controls ===
     Mod+Escape allow-inhibiting=false repeat=false { toggle-keyboard-shortcuts-inhibit; }
