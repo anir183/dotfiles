@@ -78,23 +78,11 @@ window-rule {
 	open-floating false
 }
 window-rule {
-	match app-id=r#"^org\.gnome\.Calculator$"#
-	match app-id=r#"^gnome-calculator$"#
-	match app-id=r#"^galculator$"#
-	match app-id=r#"^blueman-manager$"#
-	match app-id=r#"^org\.gnome\.Nautilus$"#
-	match app-id=r#"^org\.gnome\.NautilusPreviewer$"#
-	match app-id=r#"^xdg-desktop-portal$"#
-	match title="Eyedropper"
-	match title="^$"
-	open-floating true
-}
-window-rule {
 	match app-id=r#"^steam$"# title=r#"^notificationtoasts_\d+_desktop$"#
 	default-floating-position x=10 y=10 relative-to="bottom-right"
 	open-focused false
 }
-window-rule {
+window-rule { // blurred
 	match app-id=r#"^org\.wezfurlong\.wezterm$"#
 	match app-id="Alacritty"
 	match app-id="zen"
@@ -109,27 +97,34 @@ window-rule {
 		saturation 3
 	}
 }
-window-rule {
+window-rule { // particular width
 	match app-id="io.github.tobagin.karere"
 	match app-id="discord"
 	match app-id="io.missioncenter.MissionCenter"
 	match app-id="yaak-app"
 	default-column-width { proportion 0.8; }
 }
-window-rule {
+window-rule { // floating
 	match app-id=r#"firefox$"# title="^Picture-in-Picture$"
 	match app-id="app.zen_browser.zen" title="^Picture-in-Picture$"
 	match app-id="app.zen_browser.zen" title="^$"
+	match app-id="it.mijorus.smile"
+	match app-id=r#"^org\.gnome\.Calculator$"#
+	match app-id=r#"^gnome-calculator$"#
+	match app-id=r#"^galculator$"#
+	match app-id=r#"^blueman-manager$"#
+	match app-id=r#"^org\.gnome\.Nautilus$"#
+	match app-id=r#"^org\.gnome\.NautilusPreviewer$"#
+	match app-id=r#"^xdg-desktop-portal$"#
+	match title="Eyedropper"
 	match app-id="zoom"
+	match title="^$"
 	open-floating true
 }
-window-rule {
+window-rule { // non-floating
 	match app-id="zoom" title="Meeting"
 	match app-id=r#"org.quickshell$"#
 	match app-id=r#"com.danklinux.dms$"#
-	open-floating false
-}
-window-rule {
 	match app-id="Emulator"
 	open-floating false
 }
