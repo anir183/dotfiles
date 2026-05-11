@@ -28,7 +28,9 @@ set -gx CUDA_CACHE_PATH $XDG_CACHE_HOME/nv
 
 set -gx GNUPGHOME $XDG_DATA_HOME/gnupg
 
-set -gx CHROME_EXCUTABLE /var/lib/flatpak/app/io.github.ungoogled_software.ungoogled_chromium/current/active/export/bin/io.github.ungoogled_software.ungoogled_chromium
+if not is_distrobox
+	set -gx CHROME_EXCUTABLE /var/lib/flatpak/app/io.github.ungoogled_software.ungoogled_chromium/current/active/export/bin/io.github.ungoogled_software.ungoogled_chromium
+end
 
 set -gx LUAROCKS_CONFIG $HOME/.config/luarocks/config.lua
 
@@ -38,9 +40,16 @@ set -gx WGET_HSTS_FILE $XDG_DATA_HOME/wget-hsts
 set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME"/npm/npmrc
 
 #[[ path var ]]
-fish_add_path /opt/cuda/bin
-fish_add_path $HOME/.local/bin
-fish_add_path $HOME/.local/scripts
-fish_add_path $HOME/.local/share/npm/bin
-fish_add_path $HOME/.local/share/nvim/mason/bin
-fish_add_path $HOME/.local/luarocks/bin
+# NOTE: fish_add_path sets another fish_user_path variables, performs some
+#       checks and operations and then adds them to path
+#       this causes changed ordering... use set -gx PATH if needs specific order
+fish_add_path --prepend $HOME/.local/luarocks/bin
+fish_add_path --prepend $XDG_DATA_HOME/npm/bin
+fish_add_path --prepend /opt/cuda/bin
+
+# NOTE: needs this order
+set -gx PATH \
+	$HOME/.local/bin \
+	$HOME/.local/scripts \
+	$XDG_DATA_HOME/nvim/mason/bin \
+	$PATH

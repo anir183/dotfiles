@@ -14,79 +14,36 @@ if string match -q '/run/host/*' "$dir"
 	end
 end
 
-# fast node verison manager
+# env vars
+set -gx CHROME_EXECUTABLE /run/host/var/lib/flatpak/app/io.github.ungoogled_software.ungoogled_chromium/current/active/export/bin/io.github.ungoogled_software.ungoogled_chromium
+
+# node
 fnm env --use-on-cd --shell fish | source
+
+# java
+javm init fish | source
+set -gx _JAVA_AWT_WM_NONREPARENTING 1
+
+# zig
+fish_add_path --prepend $XDG_DATA_HOME/zvm/bin
+
+# go
+if test -s "$HOME/.g/env.fish"; and source "$HOME/.g/env.fish"; end
+
+# flutter
+# alias flutter "fvm flutter"
+# alias dart "fvm dart"
+
+# android
+set -x ANDROID_HOME $HOME/.local/share/android-sdk
+set -x ANDROID_SDK_ROOT $ANDROID_HOME
+set -x ANDROID_AVD_HOME $XDG_CONFIG_HOME/.android/avd
+
+fish_add_path $ANDROID_HOME/cmdline-tools/latest/bin
+fish_add_path $ANDROID_HOME/platform-tools
+fish_add_path $ANDROID_HOME/emulator
+
+abbr -a emul "emulator -avd Pixel_36 -no-metrics"
 
 # has to be near the end (zellij is the only exception)
 zoxide init fish --cmd chd | source
-
-# if [[ "$CONTAINER_ID" != "dev-flutter" ]]; then
-# 	return
-# fi
-#
-# export CHROME_EXECUTABLE="/usr/bin/chromium"
-# export ANDROID_HOME="$HOME/Android/Sdk"
-# # export ANDROID_AVD_HOME=$XDG_CONFIG_HOME/.android/avd
-# export PATH="/home/anir183/.envs/dev-flutter/fvm/default/bin:$PATH"
-# export PATH="/home/anir183/.envs/dev-flutter/fvm/bin:$PATH"
-# export PATH="/home/anir183/.envs/dev-flutter/Android/Sdk/build-tools/36.1.0:$PATH"
-# export PATH="/home/anir183/.envs/dev-flutter/Android/Sdk/cmdline-tools/latest/bin:$PATH"
-# export PATH="/home/anir183/.envs/dev-flutter/Android/Sdk/emulator:$PATH"
-# export PATH="/home/anir183/.envs/dev-flutter/Android/Sdk/platform-tools:$PATH"
-# alias flutter="fvm flutter"
-# alias dart="fvm dart"
-# # alias run-emul="emulator -avd \"pixel8-andr36.0.0-googleapis-x86_64\" -netdelay none -netspeed full -gpu on -memory 4096 -cores 4"
-# # alias emul="emulator -avd \"pixel8-andr36.0.0-googleapis-x86_64\" -netdelay none -netspeed full -gpu on -memory 4096 -cores 4"
-
-
-# if [[ "$CONTAINER_ID" != "dev-golang" ]]; then
-# 	return
-# fi
-#
-# source "/home/anir183/.envs/dev-golang/.g/env"
-
-
-# if [[ "$CONTAINER_ID" != "dev-java" ]]; then
-# 	return
-# fi
-#
-# export _JAVA_AWT_WM_NONREPARENTING=1
-#
-# export CHROME_EXECUTABLE="/usr/bin/chromium"
-# export ANDROID_HOME="$HOME/Android/Sdk"
-# # export ANDROID_AVD_HOME=$XDG_CONFIG_HOME/.android/avd
-# export PATH="/home/anir183/.envs/dev-java/Android/Sdk/build-tools/36.1.0:$PATH"
-# export PATH="/home/anir183/.envs/dev-java/Android/Sdk/cmdline-tools/latest/bin:$PATH"
-# export PATH="/home/anir183/.envs/dev-java/Android/Sdk/emulator:$PATH"
-# export PATH="/home/anir183/.envs/dev-java/Android/Sdk/platform-tools:$PATH"
-# export PATH="/home/anir183/.envs/dev-java/.local/share/JetBrains/Toolbox/apps/intellij-idea/bin/:$PATH"
-# export SDKMAN_DIR="$HOME/.sdkman"
-# export PATH="$HOME/.pgenv/bin:$HOME/.pgenv/pgsql/bin:$PATH"
-# #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-# [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-
-# if [[ "$CONTAINER_ID" != "dev-nodejs" ]]; then
-# 	return
-# fi
-#
-# export NVM_DIR="$HOME/.config/nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-
-# if [[ "$CONTAINER_ID" != "dev-rust" ]]; then
-# 	return
-# fi
-#
-# export CHROME_EXECUTABLE="/usr/bin/chromium"
-# export ANDROID_HOME="$HOME/Android/Sdk"
-# export NDK_HOME="$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"
-# export PATH="/home/anir183/.envs/dev-rust/Android/Sdk/build-tools/36.1.0:$PATH"
-# export PATH="/home/anir183/.envs/dev-rust/Android/Sdk/emulator:$PATH"
-# export PATH="/home/anir183/.envs/dev-rust/Android/Sdk/cmdline-tools/latest/bin:$PATH"
-# export PATH="/home/anir183/.envs/dev-rust/Android/Sdk/platform-tools:$PATH"
-#
-# export NVM_DIR="$HOME/.config/nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
