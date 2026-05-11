@@ -1,0 +1,5 @@
+#!/usr/bin/env fish
+
+env QT_QPA_PLATFORM=xcb \
+	$HOME/.local/share/android-sdk/emulator/emulator \
+	$argv

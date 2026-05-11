@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+sed -i 's/\"open\":true/\"open\":false/g' $HOME/.var/app/md.obsidian.Obsidian/config/obsidian/obsidian.json
+flatpak run --branch=stable --arch=x86_64 --command=obsidian.sh --file-forwarding md.obsidian.Obsidian @@u %U @@
