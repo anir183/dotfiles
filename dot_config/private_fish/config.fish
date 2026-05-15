@@ -1,16 +1,16 @@
 #!/usr/bin/env fish
 
 if status is-interactive
-	if is_distrobox
-		return
-	end
+    if is_distrobox
+        return
+    end
 
-	# luarocks paths
-	eval (luarocks path)
+    # luarocks paths
+    eval (luarocks path)
 
-	# has to be near the end (zellij is the only exception)
-	zoxide init fish --cmd chd | source
+    # has to be near the end (zellij is the only exception)
+    zoxide init fish --cmd chd | source
 
-	# custom zellij session start function
-	sess_zellij
+    # custom zellij session start function
+    sess_zellij
 end

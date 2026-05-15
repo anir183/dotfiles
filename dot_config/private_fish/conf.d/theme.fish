@@ -27,16 +27,16 @@ set -gx fish_color_selection white --bold --background=brblack
 set -gx fish_color_status red
 set -gx fish_color_user eda792
 set -gx fish_color_valid_path bryellow --underline=single
-set -gx fish_pager_color_background 
+set -gx fish_pager_color_background
 set -gx fish_pager_color_completion normal
 set -gx fish_pager_color_description yellow --italics
 set -gx fish_pager_color_prefix --bold --underline=single
 set -gx fish_pager_color_progress brwhite --bold --background=cyan
-set -gx fish_pager_color_secondary_background 
-set -gx fish_pager_color_secondary_completion 
-set -gx fish_pager_color_secondary_description 
-set -gx fish_pager_color_secondary_prefix 
+set -gx fish_pager_color_secondary_background
+set -gx fish_pager_color_secondary_completion
+set -gx fish_pager_color_secondary_description
+set -gx fish_pager_color_secondary_prefix
 set -gx fish_pager_color_selected_background --reverse
-set -gx fish_pager_color_selected_completion 
-set -gx fish_pager_color_selected_description 
-set -gx fish_pager_color_selected_prefix 
+set -gx fish_pager_color_selected_completion
+set -gx fish_pager_color_selected_description
+set -gx fish_pager_color_selected_prefix

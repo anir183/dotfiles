@@ -1,17 +1,17 @@
 #!/usr/bin/env fish
 
 if not is_distrobox
-	return
+    return
 end
 
 # fix /run/host/* pwd
 set dir (pwd)
 if string match -q '/run/host/*' "$dir"
-	set realdir (string replace '/run/host' '' "$dir")
+    set realdir (string replace '/run/host' '' "$dir")
 
-	if test -d "$realdir"
-		cd "$realdir"
-	end
+    if test -d "$realdir"
+        cd "$realdir"
+    end
 end
 
 # env vars
@@ -28,7 +28,8 @@ set -gx _JAVA_AWT_WM_NONREPARENTING 1
 fish_add_path --prepend $XDG_DATA_HOME/zvm/bin
 
 # go
-if test -s "$HOME/.g/env.fish"; and source "$HOME/.g/env.fish"; end
+if test -s "$HOME/.g/env.fish"; and source "$HOME/.g/env.fish"
+end
 
 # flutter
 # alias flutter "fvm flutter"

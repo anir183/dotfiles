@@ -25,7 +25,7 @@ set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 
 set -gx GOPATH "$XDG_DATA_HOME/go"
 
-set -gx CUDA_HOME "/opt/cuda"
+set -gx CUDA_HOME /opt/cuda
 set -gx CUDA_CACHE_PATH "$XDG_CACHE_HOME/nv"
 
 set -gx DOTNET_CLI_HOME "$XDG_DATA_HOME/dotnet"
@@ -34,7 +34,7 @@ set -gx NUGET_PACKAGES "$XDG_CACHE_HOME/NuGetPackages"
 set -gx GNUPGHOME "$XDG_DATA_HOME/gnupg"
 
 if not is_distrobox
-	set -gx CHROME_EXCUTABLE "/var/lib/flatpak/app/io.github.ungoogled_software.ungoogled_chromium/current/active/export/bin/io.github.ungoogled_software.ungoogled_chromium"
+    set -gx CHROME_EXCUTABLE "/var/lib/flatpak/app/io.github.ungoogled_software.ungoogled_chromium/current/active/export/bin/io.github.ungoogled_software.ungoogled_chromium"
 end
 
 set -gx LUAROCKS_CONFIG "$HOME/.config/luarocks/config.lua"
@@ -51,11 +51,11 @@ set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
 fish_add_path --prepend "$HOME/.local/lib/luarocks/bin"
 fish_add_path --prepend "$HOME/.local/lib/dotool-1.6"
 fish_add_path --prepend "$XDG_DATA_HOME/npm/bin"
-fish_add_path --prepend "/opt/cuda/bin"
+fish_add_path --prepend /opt/cuda/bin
 
 # NOTE: needs this order
 set -gx PATH \
-	"$HOME/.local/bin" \
-	"$HOME/.local/scripts" \
-	"$XDG_DATA_HOME/nvim/mason/bin" \
-	"$PATH"
+    "$HOME/.local/bin" \
+    "$HOME/.local/scripts" \
+    "$XDG_DATA_HOME/nvim/mason/bin" \
+    "$PATH"
