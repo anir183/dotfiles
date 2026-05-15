@@ -19,11 +19,11 @@ input {
 	trackpoint {
 		off
 	}
-	tablet {
-		map-to-output "HDMI-A-1"
-	}
 	touch {
 		off
+	}
+	tablet {
+		map-to-focused-output
 	}
 	mod-key "Super"
 	mod-key-nested "Alt"
@@ -104,6 +104,12 @@ window-rule { // particular width
 	match app-id="yaak-app"
 	default-column-width { proportion 0.8; }
 }
+window-rule {
+	match app-id=r#"^org\.gnome\.NautilusPreviewer$"#
+	default-column-width { proportion 0.75; }
+	default-window-height { proportion 0.66667; }
+	open-floating true
+}
 window-rule { // floating
 	match app-id=r#"firefox$"# title="^Picture-in-Picture$"
 	match app-id="app.zen_browser.zen" title="^Picture-in-Picture$"
@@ -114,7 +120,6 @@ window-rule { // floating
 	match app-id=r#"^galculator$"#
 	match app-id=r#"^blueman-manager$"#
 	match app-id=r#"^org\.gnome\.Nautilus$"#
-	match app-id=r#"^org\.gnome\.NautilusPreviewer$"#
 	match app-id=r#"^xdg-desktop-portal$"#
 	match title="Eyedropper"
 	match app-id="zoom"
