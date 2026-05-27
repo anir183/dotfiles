@@ -98,7 +98,7 @@ window-rule { // blurred
 	}
 }
 window-rule { // particular width
-	match app-id="io.github.tobagin.karere"
+	match app-id="io.github.denysmb.unify"
 	match app-id="discord"
 	match app-id="io.missioncenter.MissionCenter"
 	match app-id="yaak-app"
