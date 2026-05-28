@@ -26,7 +26,7 @@ abbr -a legit lazygit
 
 #[[ distrobox ]]
 abbr -a chenv "distrobox enter --clean-path"
-abbr -a dbox "distrobox"
+abbr -a dbox distrobox
 
 #[[ custom remember script ]]
 abbr -a rem remember
