@@ -6,7 +6,9 @@ if status is-interactive
     end
 
     # luarocks paths
-    eval (luarocks path)
+    if type -q luarocks
+        eval (luarocks path)
+    end
 
     # has to be near the end (zellij is the only exception)
     zoxide init fish --cmd chd | source
