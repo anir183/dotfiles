@@ -27,7 +27,7 @@ layout {
                 border_format   "#[fg=#6C7086]{char}"
                 border_position "top"
 
-                hide_frame_for_single_pane "true"
+                hide_frame_for_single_pane "false"
 
                 mode_normal        "#[bg=$bg,fg=$orange,bold]  #[bg=$orange,fg=$black,bold]  normal  "
                 mode_locked        "#[bg=$bg,fg=$red,bold]  #[bg=$red,fg=$black,bold]  locked  "
