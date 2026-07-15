@@ -122,6 +122,7 @@ window-rule { // floating
 	match app-id=r#"^blueman-manager$"#
 	match app-id=r#"^org\.gnome\.Nautilus$"#
 	match app-id=r#"^xdg-desktop-portal$"#
+	match app-id=r#"^org\.quickshell$"# title="Authentication"
 	match title="Eyedropper"
 	match app-id="zoom"
 	match title="^$"
