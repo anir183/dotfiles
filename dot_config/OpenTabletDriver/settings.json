@@ -11,10 +11,10 @@
       "Filters": [],
       "AbsoluteModeSettings": {
         "Display": {
-          "Width": 1600.0,
-          "Height": 900.0,
-          "X": 800.0,
-          "Y": 450.0,
+          "Width": 1920.0,
+          "Height": 1080.0,
+          "X": 960.0,
+          "Y": 540.0,
           "Rotation": 0.0
         },
         "Tablet": {
