@@ -8,11 +8,11 @@ abbr -a npvim "nvim --cmd \"let g:MODE_183='no-plugin'\""
 abbr -a leet "nvim leetcode.nvim"
 
 #[[ eza list commands ]]
-abbr -a el "eza -a"
-abbr -a ell "eza -l"
-abbr -a ela "eza -la"
-abbr -a etree "eza --tree"
-abbr -a etrea "eza --tree -a"
+abbr -a el "eza -aF"
+abbr -a ell "eza -lF"
+abbr -a ela "eza -laF"
+abbr -a etree "eza --tree -F"
+abbr -a etrea "eza --tree -aF"
 
 #[[ git ]]
 abbr -a ga "git add"
