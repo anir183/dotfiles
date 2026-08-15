@@ -1,10 +1,6 @@
 #!/usr/bin/env fish
 
 function sess_zellij --description "smart zellij session manager"
-    if is_distrobox
-        return 1
-    end
-
     set include_all 0
 
     # -----------------------------

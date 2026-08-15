@@ -24,10 +24,6 @@ abbr -a lg lazygit
 abbr -a lgit lazygit
 abbr -a legit lazygit
 
-#[[ distrobox ]]
-abbr -a chenv "distrobox enter --clean-path"
-abbr -a dbox distrobox
-
 #[[ custom remember script ]]
 abbr -a rem remember
 abbr -a r ". remember goto"
@@ -45,3 +41,9 @@ abbr -a r0 ". remember 0"
 #[[ misc ]]
 abbr -a chist "mv $XDG_DATA_HOME/fish/fish_history $XDG_DATA_HOME/fish/fish_history.bak"
 abbr -a :q exit
+
+#[[ functions ]]
+abbr -a sess-zellij sess_zellij
+abbr -a sess "sess_zellij --all"
+
+abbr -a update-mirrors update_mirrors
