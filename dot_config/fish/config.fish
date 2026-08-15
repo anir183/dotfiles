@@ -3,6 +3,8 @@
 source /usr/share/cachyos-fish-config/cachyos-config.fish
 
 if status is-interactive
+    fish_vi_key_bindings
+
     # luarocks paths
     if type -q luarocks
         eval (luarocks path)
