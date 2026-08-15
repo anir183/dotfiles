@@ -1,0 +1,6 @@
+github.com:
+    git_protocol: https
+    users:
+        anir183:
+            git_protocol: https
+    user: anir183

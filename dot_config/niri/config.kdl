@@ -1,0 +1,242 @@
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
+
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Input
+input {
+	keyboard {
+		xkb {
+		layout "us"
+		}
+	repeat-delay 250
+	repeat-rate 24
+		numlock
+	}
+	touchpad {
+		tap
+		natural-scroll
+	}
+	mouse {
+	}
+	trackpoint {
+		off
+	}
+	touch {
+		off
+	}
+	tablet {
+		map-to-focused-output
+	}
+	mod-key "Super"
+	mod-key-nested "Alt"
+}
+
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
+layout {
+	center-focused-column "on-overflow"
+	always-center-single-column
+	empty-workspace-above-first
+	default-column-display "normal"
+	background-color "transparent"
+	preset-column-widths {
+		proportion 0.25
+		proportion 0.33333
+		proportion 0.5
+		proportion 0.66667
+		proportion 0.75
+		proportion 0.85
+		proportion 1.0
+	}
+	default-column-width { }
+	preset-window-heights {
+		proportion 0.25
+		proportion 0.33333
+		proportion 0.5
+		proportion 0.66667
+	proportion 0.75
+	proportion 0.85
+	proportion 1.0
+	}
+}
+
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Layer-Rules
+layer-rule {
+	match namespace="^quickshell$"
+	place-within-backdrop true
+}
+
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
+window-rule {
+	match app-id=r#"^org\.gnome\."#
+	draw-border-with-background false
+	geometry-corner-radius 12
+	clip-to-geometry true
+}
+window-rule {
+	match app-id=r#"^gnome-control-center$"#
+	match app-id=r#"^pavucontrol$"#
+	match app-id=r#"^nm-connection-editor$"#
+	default-column-width { proportion 0.5; }
+	open-floating false
+}
+window-rule {
+	match app-id=r#"^steam$"# title=r#"^notificationtoasts_\d+_desktop$"#
+	default-floating-position x=10 y=10 relative-to="bottom-right"
+	open-focused false
+}
+window-rule { // blurred
+	match app-id=r#"^org\.wezfurlong\.wezterm$"#
+	match app-id="Alacritty"
+	match app-id="zen"
+	match app-id="com.mitchellh.ghostty"
+	match app-id="kitty"
+	draw-border-with-background false
+	default-column-width { proportion 0.8; }
+	background-effect {
+		xray false
+		blur true
+		noise 0.05
+		saturation 3
+	}
+}
+window-rule { // particular width
+	match app-id="io.github.tobagin.karere"
+	match app-id="io.github.denysmb.unify"
+	match app-id="discord"
+	match app-id="io.missioncenter.MissionCenter"
+	match app-id="yaak-app"
+	default-column-width { proportion 0.8; }
+}
+window-rule {
+	match app-id=r#"^org\.gnome\.NautilusPreviewer$"#
+	default-column-width { proportion 0.75; }
+	default-window-height { proportion 0.66667; }
+	open-floating true
+}
+window-rule { // floating
+	match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+	match app-id="app.zen_browser.zen" title="^Picture-in-Picture$"
+	match app-id="app.zen_browser.zen" title="^$"
+	match app-id="it.mijorus.smile"
+	match app-id=r#"^org\.gnome\.Calculator$"#
+	match app-id=r#"^gnome-calculator$"#
+	match app-id=r#"^galculator$"#
+	match app-id=r#"^blueman-manager$"#
+	match app-id=r#"^org\.gnome\.Nautilus$"#
+	match app-id=r#"^xdg-desktop-portal$"#
+	match app-id=r#"^com\.danklinux\.dms$"# title="Authentication"
+	match title="Eyedropper"
+	match app-id="zoom"
+	match title="^$"
+	open-floating true
+}
+window-rule { // non-floating
+	match app-id="zoom" title="Meeting"
+	match app-id=r#"org.quickshell$"#
+	match app-id=r#"com.danklinux.dms$"#
+	match app-id="Emulator"
+	open-floating false
+}
+
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Animations
+animations {
+	off
+}
+
+recent-windows {
+	off
+}
+
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Debug-Options
+debug {
+	// preview-render "screencast"
+	// preview-render "screen-capture"
+	// enable-overlay-planes
+	// disable-cursor-plane
+	// disable-direct-scanout
+	// restrict-primary-scanout-to-matching-format
+	// render-drm-device "/dev/dri/renderD129"
+	// ignore-drm-device "/dev/dri/renderD128"
+	// ignore-drm-device "/dev/dri/renderD130"
+	// force-pipewire-invalid-modifier
+	// dbus-interfaces-in-non-session-instances
+	// wait-for-frame-completion-before-queueing
+	// emulate-zero-presentation-time
+	// disable-resize-throttling
+	// disable-transactions
+	// keep-laptop-panel-on-when-lid-is-closed
+	// disable-monitor-names
+	// strict-new-window-focus-policy
+	honor-xdg-activation-with-invalid-serial
+	// skip-cursor-only-updates-during-vrr
+	// deactivate-unfocused-windows
+}
+
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Miscellaneous
+spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
+spawn-at-startup "~/.config/niri/float_browser_extn.py"
+
+prefer-no-csd
+
+screenshot-path "~/media/pictures/screenshots/%Y-%m-%d-%H-%M-%S-screenshot.png"
+
+environment {
+	EDITOR "nvim"
+	TERMINAL "ghostty"
+
+	XDG_DATA_HOME "~/.local/share"
+	XDG_CONFIG_HOME "~/.config"
+	XDG_STATE_HOME "~/.local/state"
+	XDG_CACHE_HOME "~/.cache"
+
+	XDG_CURRENT_DESKTOP "niri"
+	XDG_MENU_PREFIX "plasma-"
+
+	QT_QPA_PLATFORM "wayland"
+	QT_QPA_PLATFORMTHEME "qt6ct"
+	QT_QPA_PLATFORMTHEME_QT6 "qt6ct"
+
+	ELECTRON_OZONE_PLATFORM_HINT "auto"
+}
+
+cursor {
+	hide-when-typing
+}
+
+gestures {
+	hot-corners {
+		off
+	}
+}
+
+overview {
+	zoom 0.65
+	backdrop-color "#262626"
+	workspace-shadow {
+		off
+		softness 40
+		spread 10
+		offset x=0 y=10
+		color "#00000050"
+	}
+}
+
+xwayland-satellite {
+	path "xwayland-satellite"
+}
+
+hotkey-overlay {
+	skip-at-startup
+	hide-not-bound
+}
+
+config-notification {
+	disable-failed
+}
+
+// Include dms files
+include optional=true "dms/colors.kdl"
+include optional=true "dms/layout.kdl"
+include optional=true "dms/alttab.kdl"
+include optional=true "dms/binds.kdl"
+include optional=true "dms/outputs.kdl"
+include optional=true "dms/cursor.kdl"
+include optional=true "dms/windowrules.kdl"
