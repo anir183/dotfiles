@@ -3,15 +3,17 @@
 source /usr/share/cachyos-fish-config/cachyos-config.fish
 
 if status is-interactive
-    fish_vi_key_bindings
+	fish_vi_key_bindings
 
-    # luarocks paths
-    if type -q luarocks
-        eval (luarocks path)
-    end
+	# luarocks paths
+	if type -q luarocks
+		eval (luarocks path)
+	end
 
-    # has to be near the end (zellij is the only exception)
-    zoxide init fish --cmd chd | source
+	# has to be near the end (zellij is the only exception)
+	zoxide init fish --cmd chd | source
+
+	sess_zellij
 end
 
 # overwrite greeting and disable fastfetch

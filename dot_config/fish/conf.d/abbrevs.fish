@@ -39,6 +39,7 @@ abbr -a r9 ". remember 9"
 abbr -a r0 ". remember 0"
 
 #[[ misc ]]
+# abbr -a emul "emulator -avd Pixel_36 -no-metrics"
 abbr -a chist "mv $XDG_DATA_HOME/fish/fish_history $XDG_DATA_HOME/fish/fish_history.bak"
 abbr -a :q exit
 

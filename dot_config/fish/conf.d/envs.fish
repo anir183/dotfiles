@@ -41,6 +41,7 @@ set -gx WGETRC "$XDG_CONFIG_HOME/wgetrc"
 set -gx WGET_HSTS_FILE "$XDG_DATA_HOME/wget-hsts"
 
 set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
+export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 
 #[[ path var ]]
 # NOTE: fish_add_path sets another fish_user_path variables, performs some
@@ -53,39 +54,24 @@ fish_add_path --prepend /opt/cuda/bin
 
 # NOTE: needs this order
 set -gx PATH \
-    "$HOME/.local/bin" \
-    "$HOME/.local/scripts" \
-    "$XDG_DATA_HOME/nvim/mason/bin" \
-    "$PATH"
+	"$HOME/.local/bin" \
+	"$HOME/.local/scripts" \
+	"$XDG_DATA_HOME/nvim/mason/bin" \
+	"$PATH"
 
-# # env vars
-# set -gx CHROME_EXECUTABLE /run/host/var/lib/flatpak/app/io.github.ungoogled_software.ungoogled_chromium/current/active/export/bin/io.github.ungoogled_software.ungoogled_chromium
-#
-# # node
-# fnm env --use-on-cd --shell fish | source
-#
-# # java
-# javm init fish | source
+
+# java
 # set -gx _JAVA_AWT_WM_NONREPARENTING 1
-#
-# # zig
+
+# zig
 # fish_add_path --prepend $XDG_DATA_HOME/zvm/bin
-#
-# # go
-# if test -s "$HOME/.g/env.fish"; and source "$HOME/.g/env.fish"
-# end
-#
-# # flutter
-# # alias flutter "fvm flutter"
-# # alias dart "fvm dart"
-#
-# # android
+
+# android
 # set -x ANDROID_HOME $HOME/.local/share/android-sdk
 # set -x ANDROID_SDK_ROOT $ANDROID_HOME
 # set -x ANDROID_AVD_HOME $XDG_CONFIG_HOME/.android/avd
-#
+
 # fish_add_path $ANDROID_HOME/cmdline-tools/latest/bin
 # fish_add_path $ANDROID_HOME/platform-tools
 # fish_add_path $ANDROID_HOME/emulator
-#
-# abbr -a emul "emulator -avd Pixel_36 -no-metrics"
+
