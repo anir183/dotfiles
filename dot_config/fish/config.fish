@@ -18,6 +18,9 @@ if status is-interactive
 
 	# start zellij session
 	sess_zellij
+else
+	# dev tools and environment manager
+	mise activate fish --shims | source
 end
 
 # overwrite greeting and disable fastfetch
