@@ -173,6 +173,7 @@ debug {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Miscellaneous
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 spawn-at-startup "~/.config/niri/float_browser_extn.py"
+spawn-at-startup "systemctl" "--user" "start" "app-org.kde.kdeconnect.daemon@autostart.service"
 
 prefer-no-csd
 
@@ -181,11 +182,6 @@ screenshot-path "~/media/pictures/screenshots/%Y-%m-%d-%H-%M-%S-screenshot.png"
 environment {
 	EDITOR "nvim"
 	TERMINAL "ghostty"
-
-	XDG_DATA_HOME "~/.local/share"
-	XDG_CONFIG_HOME "~/.config"
-	XDG_STATE_HOME "~/.local/state"
-	XDG_CACHE_HOME "~/.cache"
 
 	XDG_CURRENT_DESKTOP "niri"
 	XDG_MENU_PREFIX "plasma-"
