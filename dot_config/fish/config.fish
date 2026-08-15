@@ -10,9 +10,13 @@ if status is-interactive
 		eval (luarocks path)
 	end
 
+	# dev tools and environment manager
+	mise activate fish | source
+
 	# has to be near the end (zellij is the only exception)
 	zoxide init fish --cmd chd | source
 
+	# start zellij session
 	sess_zellij
 end
 
