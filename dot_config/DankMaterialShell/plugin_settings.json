@@ -1,0 +1,14 @@
+{
+  "dankKDEConnect": {
+    "enabled": true,
+    "scanSubdirectories": true,
+    "selectedDeviceId": "ced37bcf4d96463b8b3a801489cac4d8"
+  },
+  "dankNotepadModule": {
+    "enabled": true
+  },
+  "quickCapture": {
+    "enabled": true,
+    "screenshotBackend": "dms"
+  }
+}
