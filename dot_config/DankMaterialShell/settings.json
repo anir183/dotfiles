@@ -611,6 +611,10 @@
       ],
       "showOnLastDisplay": true,
       "leftWidgets": [
+        {
+          "id": "systemTray",
+          "enabled": true
+        },
         "workspaceSwitcher",
         {
           "id": "runningApps",
@@ -623,20 +627,44 @@
         "focusedWindow"
       ],
       "centerWidgets": [
+        {
+          "id": "privacyIndicator",
+          "enabled": true
+        },
         "music",
+        {
+          "id": "dankKDEConnect",
+          "enabled": true
+        },
         "clock",
         "weather"
       ],
       "rightWidgets": [
         {
-          "id": "dankKDEConnect",
+          "id": "quickCapture",
           "enabled": true
         },
         "cpuUsage",
+        {
+          "id": "cpuTemp",
+          "enabled": true,
+          "minimumWidth": true
+        },
+        {
+          "id": "gpuTemp",
+          "enabled": true,
+          "selectedGpuIndex": 0,
+          "pciId": "10de:25ac"
+        },
         "memUsage",
         "battery",
-        "controlCenterButton",
-        "systemTray",
+        {
+          "id": "controlCenterButton",
+          "enabled": true,
+          "showAudioPercent": false,
+          "showMicIcon": false,
+          "showMicPercent": false
+        },
         "notificationButton"
       ],
       "spacing": 0,
