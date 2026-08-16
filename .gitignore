@@ -2,6 +2,7 @@ dot_config/zellij/plugins/
 dot_config/private_fish/private_fish_variables
 dot_config/private_fish/fish_variables
 dot_config/DankMaterialShell/plugins
+dot_config/fish/completions
 node_modules
 package.json
 package-lock.json
