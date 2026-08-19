@@ -33,7 +33,7 @@ set -gx NUGET_PACKAGES "$XDG_CACHE_HOME/NuGetPackages"
 
 set -gx GNUPGHOME "$XDG_DATA_HOME/gnupg"
 
-set -gx CHROME_EXCUTABLE "/var/lib/flatpak/app/io.github.ungoogled_software.ungoogled_chromium/current/active/export/bin/io.github.ungoogled_software.ungoogled_chromium"
+set -gx CHROME_EXECUTABLE "/var/lib/flatpak/app/io.github.ungoogled_software.ungoogled_chromium/current/active/export/bin/io.github.ungoogled_software.ungoogled_chromium"
 
 set -gx LUAROCKS_CONFIG "$HOME/.config/luarocks/config.lua"
 
