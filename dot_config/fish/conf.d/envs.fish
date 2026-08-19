@@ -20,6 +20,8 @@ set -gx __fish_git_prompt_showcolorhints true
 set -gx __fish_git_prompt_char_stateseparator ' '
 
 #[[ environment variables for different software ]]
+set -gx _JAVA_AWT_WM_NONREPARENTING 1
+
 set -gx RUSTUP_HOME "$XDG_DATA_HOME/rustup"
 set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 
@@ -43,13 +45,18 @@ set -gx WGET_HSTS_FILE "$XDG_DATA_HOME/wget-hsts"
 set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
 set -gx NODE_REPL_HISTORY "$XDG_DATA_HOME/node_repl_history"
 
+set -gx ANDROID_HOME $HOME/.android/sdk
+set -gx ANDROID_SDK_ROOT $ANDROID_HOME
+set -gx ANDROID_AVD_HOME $XDG_CONFIG_HOME/.android/avd
+
 #[[ path var ]]
 # NOTE: fish_add_path sets another fish_user_path variables, performs some
 #       checks and operations and then adds them to path
 #       this causes changed ordering... use set -gx PATH if needs specific order
-fish_add_path --prepend "$HOME/.local/lib/luarocks/bin"
-fish_add_path --prepend "$HOME/.local/lib/dotool-1.6"
 fish_add_path --prepend "$XDG_DATA_HOME/npm/bin"
+fish_add_path --prepend $ANDROID_HOME/cmdline-tools/latest/bin
+fish_add_path --prepend $ANDROID_HOME/platform-tools
+fish_add_path --prepend $ANDROID_HOME/emulator
 fish_add_path --prepend /opt/cuda/bin
 
 # NOTE: needs this order
@@ -59,19 +66,4 @@ set -gx PATH \
 	"$XDG_DATA_HOME/nvim/mason/bin" \
 	"$PATH"
 
-
-# java
-# set -gx _JAVA_AWT_WM_NONREPARENTING 1
-
-# zig
-# fish_add_path --prepend $XDG_DATA_HOME/zvm/bin
-
-# android
-# set -x ANDROID_HOME $HOME/.local/share/android-sdk
-# set -x ANDROID_SDK_ROOT $ANDROID_HOME
-# set -x ANDROID_AVD_HOME $XDG_CONFIG_HOME/.android/avd
-
-# fish_add_path $ANDROID_HOME/cmdline-tools/latest/bin
-# fish_add_path $ANDROID_HOME/platform-tools
-# fish_add_path $ANDROID_HOME/emulator
 
