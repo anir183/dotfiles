@@ -21,6 +21,7 @@ set -gx __fish_git_prompt_char_stateseparator ' '
 
 #[[ environment variables for different software ]]
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 
 set -gx RUSTUP_HOME "$XDG_DATA_HOME/rustup"
 set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
