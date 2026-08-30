@@ -30,6 +30,7 @@ set -gx GOPATH "$XDG_DATA_HOME/go"
 
 set -gx CUDA_HOME /opt/cuda
 set -gx CUDA_CACHE_PATH "$XDG_CACHE_HOME/nv"
+set -gx NVCC_CCBIN /usr/bin/g++-15
 
 set -gx DOTNET_CLI_HOME "$XDG_DATA_HOME/dotnet"
 set -gx NUGET_PACKAGES "$XDG_CACHE_HOME/NuGetPackages"
@@ -59,6 +60,7 @@ fish_add_path --prepend $ANDROID_HOME/cmdline-tools/latest/bin
 fish_add_path --prepend $ANDROID_HOME/platform-tools
 fish_add_path --prepend $ANDROID_HOME/emulator
 fish_add_path --prepend /opt/cuda/bin
+fish_add_path --prepend "$XDG_DATA_HOME/JetBrains/Toolbox/scripts"
 
 # NOTE: needs this order
 set -gx PATH \
