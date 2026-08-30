@@ -103,6 +103,7 @@ window-rule { // particular width
 	match app-id="discord"
 	match app-id="io.missioncenter.MissionCenter"
 	match app-id="yaak-app"
+	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"# title="OnlineFix Linux Launcher"
 	default-column-width { proportion 0.8; }
 }
 window-rule {
@@ -126,6 +127,7 @@ window-rule { // floating
 	match title="Eyedropper"
 	match app-id="zoom"
 	match title="^$"
+	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"# title="gameStarting"
 	open-floating true
 }
 window-rule { // non-floating
