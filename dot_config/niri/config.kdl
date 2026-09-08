@@ -71,8 +71,8 @@ window-rule {
 	clip-to-geometry true
 }
 window-rule {
-	match app-id=r#"^gnome-control-center$"#
 	match app-id=r#"^pavucontrol$"#
+	match app-id=r#"^gnome-control-center$"#
 	match app-id=r#"^nm-connection-editor$"#
 	default-column-width { proportion 0.5; }
 	open-floating false
@@ -83,11 +83,11 @@ window-rule {
 	open-focused false
 }
 window-rule { // blurred
-	match app-id=r#"^org\.wezfurlong\.wezterm$"#
-	match app-id="Alacritty"
 	match app-id="zen"
-	match app-id="com.mitchellh.ghostty"
 	match app-id="kitty"
+	match app-id="Alacritty"
+	match app-id="com.mitchellh.ghostty"
+	match app-id=r#"^org\.wezfurlong\.wezterm$"#
 	draw-border-with-background false
 	default-column-width { proportion 0.8; }
 	background-effect {
@@ -98,12 +98,12 @@ window-rule { // blurred
 	}
 }
 window-rule { // particular width
-	match app-id="io.github.tobagin.karere"
-	match app-id="io.github.denysmb.unify"
-	match app-id="discord"
-	match app-id="io.missioncenter.MissionCenter"
-	match app-id="yaak-app"
 	match app-id="itch"
+	match app-id="steam"
+	match app-id="discord"
+	match app-id="yaak-app"
+	match app-id="io.github.tobagin.karere"
+	match app-id="io.missioncenter.MissionCenter"
 	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"# title="OnlineFix Linux Launcher"
 	default-column-width { proportion 0.8; }
 }
@@ -114,20 +114,22 @@ window-rule {
 	open-floating true
 }
 window-rule { // floating
-	match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-	match app-id="app.zen_browser.zen" title="^Picture-in-Picture$"
-	match app-id="app.zen_browser.zen" title="^$"
-	match app-id="it.mijorus.smile"
-	match app-id=r#"^org\.gnome\.Calculator$"#
-	match app-id=r#"^gnome-calculator$"#
-	match app-id=r#"^galculator$"#
-	match app-id=r#"^blueman-manager$"#
-	match app-id=r#"^org\.gnome\.Nautilus$"#
-	match app-id=r#"^xdg-desktop-portal$"#
-	match app-id="com.danklinux.dms" title="Authentication"
-	match title="Eyedropper"
-	match app-id="zoom"
 	match title="^$"
+	match app-id="zoom"
+	match title="Eyedropper"
+	match app-id=r#"^galculator$"#
+	match app-id="it.mijorus.smile"
+	match app-id=r#"^blueman-manager$"#
+	match app-id=r#"^gnome-calculator$"#
+	match app-id=r#"^xdg-desktop-portal$"#
+	match app-id=r#"^org\.gnome\.Nautilus$"#
+	match app-id=r#"^org\.gnome\.Calculator$"#
+	match app-id="app.zen_browser.zen" title="^$"
+	match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+	match app-id=r#"com.danklinux.dms$"# title="Authentication"
+	match app-id="jetbrains-idea" title="Welcome to IntelliJ IDEA"
+	match app-id="app.zen_browser.zen" title="^Picture-in-Picture$"
+	match app-id="jetbrains-studio" title="Welcome to Android Studio"
 	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"# title="gameStarting"
 	open-floating true
 }
@@ -135,6 +137,7 @@ window-rule { // non-floating
 	match app-id="zoom" title="Meeting"
 	match app-id=r#"org.quickshell$"#
 	match app-id=r#"com.danklinux.dms$"#
+	match app-id="com.danklinux.dms"
 	match app-id="Emulator"
 	open-floating false
 }

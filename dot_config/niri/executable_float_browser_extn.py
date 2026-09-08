@@ -28,6 +28,11 @@ RULES = [
         "width": "30%",
         "height": "60%",
     },
+    {
+        "pattern": re.compile(r"Authentication"),
+        "width": "30%",
+        "height": "20%",
+    },
 ]
 
 
