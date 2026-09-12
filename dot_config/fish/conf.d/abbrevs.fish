@@ -18,6 +18,8 @@ abbr -a etrea "eza -F -a --tree"
 abbr -a ga "git add"
 abbr -a gs "git status"
 abbr -a gcom "git commit -m \""
+abbr -a gr "git --git-dir=repo.git"
+abbr -a grit "git --git-dir=repo.git"
 
 #[[ lazygit ]]
 abbr -a lg lazygit
@@ -48,3 +50,6 @@ abbr -a sess-zellij sess_zellij
 abbr -a sess "sess_zellij --all"
 
 abbr -a update-mirrors update_mirrors
+
+abbr -a git-refspec-fix git_refspec_fix
+abbr -a grit-refspec-fix grit_refspec_fix
