@@ -1,352 +1,702 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 
-# NOTE : this script needs to run with ". remember [args]" to actually be able
-#        to cd... maybe add alias in shell rc files
+from __future__ import annotations
 
-REMEMBER_STORE_DIR=${REMEMBER_STORE_DIR:-$XDG_DATA_HOME/remember}
+import os
+import secrets
+import shlex
+import shutil
+import string
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
 
-__exec_dir=$(pwd)
-__storage_file=$REMEMBER_STORE_DIR/store_default
 
-# @param	<nothing>
-# @return	<nothing>
-# ---
-# print the help menu
-function help_menu() {
-	echo "
+APP_NAME = "remember"
+EXEC_DIR = Path.cwd()
+HOME = Path.home()
+
+XDG_DATA_HOME = Path(
+    os.environ.get("XDG_DATA_HOME", HOME / ".local" / "share")
+).expanduser()
+
+DEFAULT_STORE_DIR = Path(
+    os.environ.get(
+        "REMEMBER_STORE_DIR",
+        XDG_DATA_HOME / APP_NAME,
+    )
+).expanduser()
+
+REMEMBER_STORE_DIR = DEFAULT_STORE_DIR
+STORAGE_FILE = DEFAULT_STORE_DIR / "store_default"
+
+
+# ============================================================
+# Utilities
+# ============================================================
+
+def command_exists(command: str) -> bool:
+    return shutil.which(command) is not None
+
+
+def run_command(command: list[str]) -> int:
+    try:
+        return subprocess.run(command).returncode
+    except OSError as exc:
+        print(f"could not run {' '.join(command)}: {exc}", file=sys.stderr)
+        return 1
+
+
+def read_store() -> list[str]:
+    try:
+        return [
+            line
+            for line in STORAGE_FILE.read_text(encoding="utf-8").splitlines()
+            if line
+        ]
+    except FileNotFoundError:
+        return []
+    except OSError as exc:
+        print(f"could not read store: {exc}", file=sys.stderr)
+        return []
+
+
+def write_store(entries: list[str]) -> bool:
+    """Atomically replace the store to avoid corruption on interruption."""
+    STORAGE_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+    content = "\n".join(entries)
+    if entries:
+        content += "\n"
+
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=STORAGE_FILE.parent,
+            prefix=f".{STORAGE_FILE.name}.",
+            delete=False,
+        ) as tmp:
+            tmp.write(content)
+            tmp.flush()
+            os.fsync(tmp.fileno())
+            temp_path = Path(tmp.name)
+
+        os.replace(temp_path, STORAGE_FILE)
+        return True
+
+    except OSError as exc:
+        print(f"could not write store: {exc}", file=sys.stderr)
+
+        try:
+            temp_path.unlink(missing_ok=True)
+        except UnboundLocalError:
+            pass
+
+        return False
+
+
+def ensure_storage() -> bool:
+    try:
+        if not REMEMBER_STORE_DIR.is_dir():
+            REMEMBER_STORE_DIR.mkdir(parents=True, exist_ok=True)
+            print(f"created storage directory at: {REMEMBER_STORE_DIR}")
+
+        if not STORAGE_FILE.exists():
+            STORAGE_FILE.touch()
+            print(f"created storage file at: {STORAGE_FILE}")
+
+        if not STORAGE_FILE.is_file():
+            print(f"store is not a regular file: {STORAGE_FILE}", file=sys.stderr)
+            return False
+
+        return True
+
+    except OSError as exc:
+        print(
+            f"could not initiate storage at {STORAGE_FILE}: {exc}",
+            file=sys.stderr,
+        )
+        return False
+
+
+def backup_store() -> bool:
+    backup = Path(f"{STORAGE_FILE}.bak")
+
+    try:
+        shutil.copy2(STORAGE_FILE, backup)
+        return True
+    except OSError as exc:
+        print(f"could not create backup: {exc}", file=sys.stderr)
+        return False
+
+
+# ============================================================
+# fzf
+# ============================================================
+
+def fuzzy_select(entries: list[str], prompt: str = "remember> ") -> str | None:
+    if not entries:
+        return None
+
+    if not command_exists("fzf"):
+        print("fzf is required", file=sys.stderr)
+        return None
+
+    try:
+        result = subprocess.run(
+            ["fzf", "--prompt", prompt],
+            input="\n".join(entries),
+            text=True,
+            capture_output=True,
+        )
+    except OSError as exc:
+        print(f"could not start fzf: {exc}", file=sys.stderr)
+        return None
+
+    if result.returncode != 0:
+        return None
+
+    selected = result.stdout.rstrip("\n")
+    return selected or None
+
+
+# ============================================================
+# Help
+# ============================================================
+
+def help_menu() -> None:
+    print(f"""\
 remember <action> [opt]
 
-bookmarking directories for fast switching. wannabe harpoon for terminal or smth.
+bookmarking directories for fast switching.
 
-	NOTE:
-	* can't change pwd unless run as \". remember [opts]\"
-	* needs fzf
-	* REMEMBER_STORE_DIR env var to change store dir (default $XDG_DATA_HOME/remember)
-	* create .remrc file in a dir to use a custom store location for all sub directories
-	  .remrc file is expected to contain only a path (to the store file)
+    NOTE:
+    * run `remember init fish | source` for fish shell integration
+    * fzf is required for fuzzy directory selection
+    * REMEMBER_STORE_DIR changes the default store directory
+      (default: {DEFAULT_STORE_DIR})
+    * create a .remrc file in a directory to use a custom store
+      for that directory and all of its subdirectories
+    * .remrc must contain the absolute path to a store file
 
-	AVAILABLE ACTIONS:
-		<none>
-				same as: remember goto
-		go | goto
-				open fuzzy matcher to goto a stored dir
-		d | def | default
-				run any other command ignoring .remrc in default store
-				opts:
-					[cmd]: any other command
-		a | add
-				add current pwd to store
-		c | rc | create | create-rc
-				create a rc file in current directory
-		rm | remove
-				remove current pwd from store
-		rmf | remove-fuzz
-				opens fuzzy matcher to remove a dir from store
-		rma | remove-all | nuke
-				remove all stored dirs
-		e | ed | edit
-				opens store file in editor
-		1 | 2 | 3 | ...
-				goto dir at given index of store
-		l | ls | list
-				list stored dirs
-		h | help
-				shows this message
+AVAILABLE ACTIONS:
 
-	EXAMPLES:
-	* remember
-	* remember add
-	* remember remove
-	* etc...
-"
-}
+    <none>
+            same as: remember goto
 
-# @param	<nothing>
-# @return	<nothing>
-# ---
-# create a rc file in current dir
-function create_rc_file() {
-	local rc_file_path="$__exec_dir/.remrc"
+    go | goto
+            open fuzzy matcher to goto a stored directory
 
-	if [ -e $rc_file_path ]; then
-		echo "rc file already exists at: $rc_file_path"
-	else
-		local store_path=""
-		vared -p "path (<enter> for xdg data): " -c name
-		store_path=$(rmv_all_spaces $store_path)
-		if [[ -z $store_path ]]; then
-			store_path="$XDG_DATA_HOME/remember/store_$(cat /dev/urandom | tr -cd "a-z0-9" | head -c 7)"
-		fi
+    d | def | default <action> [args...]
+            run an action using the default store, ignoring .remrc
 
-		echo "$store_path" > $rc_file_path
-		echo "created rc file at: $rc_file_path"
-	fi
-}
+    a | add | new
+            add current directory to store
 
-# @param	$1			argument to remove all spaces from
-# @return	<nothing>
-# ---
-# remove all spaces from an argument including in-between ones
-function rmv_all_spaces() {
-	local str=$1
+    c | rc | create | create-rc
+            create a .remrc file in current directory
 
-	echo ${str// }
-}
+    rm | remove | del | delete
+            remove current directory from store
 
-# @param	<nothing>
-# @return	<nothing>
-# ---
-# add a directory to the store
-function add_to_store() {
-	local check_already_exists=$(grep -Fx "$__exec_dir" "$__storage_file" 2> /dev/null)
+    rmf | rm-fuzz | remove-fuzz
+            fuzzy-select a directory to remove
 
-	if [ $check_already_exists ]; then
-		echo "this directory is already in the store"
-	else
-		if [[ "$(rmv_all_spaces $(cat "$__storage_file"))" == "" ]]; then
-			echo "$__exec_dir" > $__storage_file
-		else
-			echo "$__exec_dir" >> $__storage_file
-		fi
-		echo "added $__exec_dir to the store"
-	fi
-}
+    rma | rmx | remove-all | nuke
+            remove all stored directories
 
-# @param	<nothing>
-# @return	<nothing>
-# ---
-# remove current dir from store
-function remove_pwd_from_store() {
-	local dir_to_remove=$__exec_dir
+    e | ed | edit
+            open store file in editor
 
-	local check_if_exists=$(grep -Fx "$dir_to_remove" "$__storage_file" 2> /dev/null)
+    1 | 2 | 3 | ...
+            goto directory at given index
 
-	if [ $check_if_exists ]; then
-		cp -f $__storage_file "$__storage_file.bak"
-		local output=$(grep -vFx "$dir_to_remove" $__storage_file)
-		echo $output > $__storage_file
-	else
-		echo "dir $__exec_dir not found in store"
-	fi
-}
+    l | ls | ll | list
+            list stored directories
 
-# @param	<nothing>
-# @return	<nothing>
-# ---
-# remove from store
-function remove_from_store() {
-	local dir_to_remove=$(cat $__storage_file | fzf)
-	if [[ "$(rmv_all_spaces $dir_to_remove)" == "" ]]; then
-		return
-	fi
+    init fish
+            output fish shell integration
 
-	local check_if_exists=$(grep -Fx "$dir_to_remove" "$__storage_file" 2> /dev/null)
+    h | help | --help
+            show this message
 
-	if [ $check_if_exists ]; then
-		cp -f $__storage_file "$__storage_file.bak"
-		local output=$(grep -vFx "$dir_to_remove" $__storage_file)
-		echo $output > $__storage_file
-	else
-		echo "dir $dir_to_remove not found in store"
-	fi
-}
+EXAMPLES:
 
-# @param	<nothing>
-# @return	<nothing>
-# ---
-# remove all files from store
-function remove_all_from_store() {
-	local choice=""
-	vared -p "<enter> or <y> to confirm: " -c choice
-	case $(rmv_all_spaces $choice) in
-		"" )
-			;&
-		[yY]* )
-			echo "" > $__storage_file
-			echo "emptied store"
-			;;
-		* )
-			echo "aborting removal"
-			;;
-	esac
-}
-
-# @param	<nothing>
-# @return	<nothing>
-# ---
-# open store file in default editor
-function open_in_editor() {
-	if [[ -z $EDITOR ]]; then
-		$EDITOR $__storage_file
-	else
-		if command -v nvim &> /dev/null; then
-			nvim $__storage_file
-		elif command -v code &> /dev/null; then
-			code $__storage_file
-		elif command -v vim &> /dev/null; then
-			vim $__storage_file
-		elif command -v vi &> /dev/null; then
-			vi $__storage_file
-		elif command -v nano &> /dev/null; then
-			nano $__storage_file
-		else
-			echo "no supported editor"
-		fi
-	fi
-}
-
-# @param	<nothing>
-# @return	<nothing>
-# ---
-# go to searched directory
-function goto_dir() {
-	if [[ "$(rmv_all_spaces $(cat "$__storage_file"))" == "" ]]; then
-		echo "no directories in the store"
-	else
-		local dir_to_go=$(cat $__storage_file | fzf)
-		if [[ "$(rmv_all_spaces $dir_to_go)" == "" ]]; then
-			return
-		fi
-
-		cd $dir_to_go
-	fi
-}
-
-# @param	$1			1-based index of the dir to move to
-# @return	<nothing>
-# ---
-# goto file with index
-function goto_index() {
-	local index=1
-	local target=$1
-	while IFS='' read -r LINE || [ -n "${LINE}" ]; do
-		if [[ $(rmv_all_spaces ${LINE}) != ""  ]]; then
-			if [[ $index == $target ]]; then
-				cd $(rmv_all_spaces ${LINE})
-				return
-			else
-				index=$((index + 1))
-			fi
-		fi
-	done < $__storage_file
-
-	echo "no dir stored at index"
-}
-
-# @param	<nothing>
-# @return	<nothing>
-# ---
-# parse and user remrc if found
-function use_remrc() {
-	__find_path=$__exec_dir
-	while [[ "$__find_path" != "" && ! -e "$__find_path/.remrc" ]]; do
-		__find_path=${__find_path%/*}
-	done
-
-	if [[ "$(rmv_all_spaces $__find_path)" != ""  ]]; then
-		# first line of .remrc file
-		local potential_store_file=$(rmv_all_spaces $(head -n 1 "$__find_path/.remrc"))
-
-		if [[ "$potential_store_file" != "" ]]; then
-			# getting directory of given file path in .remrc
-			local potential_store_dir=$(dirname "$potential_store_file")
-
-			# NOTE : using /home/* instead of $HOME as i use distrobox with
-			#        custom home directories
-			#
-			# if directory is not home for user or a subdirectory
-			if [[ $potential_store_dir != /home/* ]] && [[ $potential_store_dir != $potential_store_file ]]; then
-				echo "invalid path in rc file: $__find_path/.remrc"
-				echo $potential_store_file
-				echo
-				echo "path has to be absolute and a sub-dir of $HOME"
-			else
-				REMEMBER_STORE_DIR=$potential_store_dir
-				__storage_file=$potential_store_file
-				echo "custom store file from remrc: $__storage_file"
-			fi
-		fi
-	fi
-}
-
-# === check and validate number of arguments ===
-__arg1=$(rmv_all_spaces $1)
-__arg2=$(rmv_all_spaces $2)
-if [ $# -lt 3 ]; then
-	if [[ $__arg1 != d ]] && [[ $__arg1 != "def" ]] && [[ $__arg1 != "default" ]]; then
-		use_remrc
-	else
-		__arg1=$__arg2
-	fi
-elif [ $# -gt 2 ]; then
-	echo "too many arguments"
-	echo "check docs with: remember help"
-	return
-else
-	use_remrc
-fi
-
-# === check and ensure remember data dir exits ===
-if [ ! -d $REMEMBER_STORE_DIR ]; then
-	if eval "mkdir -p $REMEMBER_STORE_DIR"; then
-		echo "created storage directory at: $REMEMBER_STORE_DIR"
-	else
-		echo "could not initiate storage directory at: $REMEMBER_STORE_DIR"
-		return
-	fi
-fi
-
-# === check and ensure remember data file exits ===
-if [ ! -f $__storage_file ]; then
-	if eval "touch $__storage_file"; then
-		echo "created storage file at: $__storage_file"
-	else
-		echo "could not initiate storage file at: $__storage_file"
-		return
-	fi
-fi
+    remember
+    remember add
+    remember remove
+    remember 1
+    remember goto
+    remember list
+    remember init fish | source
+""")
 
 
-# === handle arguments ===
-case $__arg1 in
-	"" )
-		;&
-	g|go|goto )
-		goto_dir
-		;;
-	l|ls|ll|list )
-		if command -v bat &> /dev/null; then
-			bat $__storage_file
-		else
-			cat $__storage_file
-		fi
-		;;
-	c|cr|create|rc|create-rc )
-		create_rc_file
-		;;
-	a|add|new )
-		add_to_store
-		;;
-	r|rm|remove|del|delete )
-		remove_pwd_from_store
-		;; 
-	rmf|rm-fuzz|remove-fuzz )
-		remove_from_store
-		;;
-	rma | rmx | remove-all | nuke )
-		remove_all_from_store
-		;;
-	e|ed|edit )
-		open_in_editor
-		;;
-	[0-9]* )
-		goto_index $__arg1
-		;;
-	help|h|--help )
-		help_menu
-		;;
-	* )
-		echo "invalid <action> argument"
-		echo "check docs with: remember help"
-		;;
-esac
+# ============================================================
+# .remrc
+# ============================================================
+
+def find_remrc() -> Path | None:
+    path = EXEC_DIR
+
+    while True:
+        rc_file = path / ".remrc"
+
+        if rc_file.is_file():
+            return rc_file
+
+        if path == path.parent:
+            return None
+
+        path = path.parent
+
+
+def create_rc_file() -> int:
+    rc_file = EXEC_DIR / ".remrc"
+
+    if rc_file.exists():
+        print(f"rc file already exists at: {rc_file}")
+        return 0
+
+    try:
+        store_path = input("path (<enter> for xdg data): ").strip()
+    except (EOFError, KeyboardInterrupt):
+        print()
+        return 1
+
+    if not store_path:
+        random_name = "".join(
+            secrets.choice(string.ascii_lowercase + string.digits)
+            for _ in range(7)
+        )
+        store_path = str(
+            XDG_DATA_HOME / APP_NAME / f"store_{random_name}"
+        )
+
+    store_path = Path(store_path).expanduser()
+
+    if not store_path.is_absolute():
+        print("store path must be absolute", file=sys.stderr)
+        return 1
+
+    try:
+        rc_file.write_text(
+            f"{store_path}\n",
+            encoding="utf-8",
+        )
+    except OSError as exc:
+        print(f"could not create rc file: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"created rc file at: {rc_file}")
+    return 0
+
+
+def use_remrc() -> None:
+    global REMEMBER_STORE_DIR
+    global STORAGE_FILE
+
+    rc_file = find_remrc()
+
+    if rc_file is None:
+        return
+
+    try:
+        lines = rc_file.read_text(encoding="utf-8").splitlines()
+    except OSError as exc:
+        print(f"could not read rc file: {exc}", file=sys.stderr)
+        return
+
+    if not lines:
+        return
+
+    raw_path = lines[0].strip()
+
+    if not raw_path:
+        return
+
+    store_file = Path(raw_path).expanduser()
+
+    if not store_file.is_absolute():
+        print(f"invalid path in rc file: {rc_file}", file=sys.stderr)
+        print(raw_path, file=sys.stderr)
+        print(
+            f"path has to be absolute and a sub-directory of {HOME}",
+            file=sys.stderr,
+        )
+        return
+
+    try:
+        store_file = store_file.resolve(strict=False)
+        store_file.relative_to(HOME.resolve())
+    except ValueError:
+        print(f"invalid path in rc file: {rc_file}", file=sys.stderr)
+        print(raw_path, file=sys.stderr)
+        print(
+            f"path has to be absolute and a sub-directory of {HOME}",
+            file=sys.stderr,
+        )
+        return
+
+    REMEMBER_STORE_DIR = store_file.parent
+    STORAGE_FILE = store_file
+
+    print(f"custom store file from remrc: {STORAGE_FILE}")
+
+
+# ============================================================
+# Store operations
+# ============================================================
+
+def add_to_store() -> int:
+    current = str(EXEC_DIR.resolve())
+    entries = read_store()
+
+    if current in entries:
+        print("this directory is already in the store")
+        return 0
+
+    entries.append(current)
+
+    if not write_store(entries):
+        return 1
+
+    print(f"added {current} to the store")
+    return 0
+
+
+def remove_pwd_from_store() -> int:
+    current = str(EXEC_DIR.resolve())
+    entries = read_store()
+
+    if current not in entries:
+        print(f"dir {current} not found in store")
+        return 1
+
+    if not backup_store():
+        return 1
+
+    entries.remove(current)
+
+    if not write_store(entries):
+        return 1
+
+    print(f"removed {current} from the store")
+    return 0
+
+
+def remove_from_store() -> int:
+    entries = read_store()
+
+    selected = fuzzy_select(entries, "remove> ")
+
+    if selected is None:
+        return 0
+
+    if selected not in entries:
+        print(f"dir {selected} not found in store")
+        return 1
+
+    if not backup_store():
+        return 1
+
+    entries.remove(selected)
+
+    return 0 if write_store(entries) else 1
+
+
+def remove_all_from_store() -> int:
+    try:
+        choice = input("<enter> or <y> to confirm: ").strip()
+    except (EOFError, KeyboardInterrupt):
+        print()
+        return 1
+
+    if not choice or choice.lower().startswith("y"):
+        if not backup_store():
+            return 1
+
+        if not write_store([]):
+            return 1
+
+        print("emptied store")
+        return 0
+
+    print("aborting removal")
+    return 0
+
+
+# ============================================================
+# Editor
+# ============================================================
+
+def open_in_editor() -> int:
+    editor = os.environ.get("EDITOR", "").strip()
+
+    if editor:
+        try:
+            command = shlex.split(editor)
+        except ValueError as exc:
+            print(f"invalid EDITOR value: {exc}", file=sys.stderr)
+            return 1
+
+        if not command:
+            print("invalid EDITOR value", file=sys.stderr)
+            return 1
+
+        return run_command(command + [str(STORAGE_FILE)])
+
+    for name in ("nvim", "code", "vim", "vi", "nano"):
+        path = shutil.which(name)
+
+        if path:
+            return run_command([path, str(STORAGE_FILE)])
+
+    print("no supported editor")
+    return 1
+
+
+# ============================================================
+# Navigation
+# ============================================================
+
+def resolve_goto_index(index: int) -> str | None:
+    entries = read_store()
+
+    if index < 1 or index > len(entries):
+        return None
+
+    # Blank lines aren't normally written, but don't let them count.
+    valid_entries = [entry for entry in entries if entry.strip()]
+
+    if index > len(valid_entries):
+        return None
+
+    return valid_entries[index - 1]
+
+
+def resolve_goto_fuzzy() -> str | None:
+    entries = [
+        entry
+        for entry in read_store()
+        if entry.strip()
+    ]
+
+    if not entries:
+        return None
+
+    return fuzzy_select(entries)
+
+
+def goto_dir() -> int:
+    entries = [
+        entry
+        for entry in read_store()
+        if entry.strip()
+    ]
+
+    if not entries:
+        print("no directories in the store")
+        return 1
+
+    selected = fuzzy_select(entries)
+
+    if selected is None:
+        return 0
+
+    print(selected)
+    return 0
+
+
+def goto_index(index: str) -> int:
+    try:
+        number = int(index)
+    except ValueError:
+        print("no dir stored at index")
+        return 1
+
+    target = resolve_goto_index(number)
+
+    if target is None:
+        print("no dir stored at index")
+        return 1
+
+    print(target)
+    return 0
+
+
+# ============================================================
+# Listing
+# ============================================================
+
+def list_store() -> int:
+    if command_exists("bat"):
+        return run_command(["bat", str(STORAGE_FILE)])
+
+    try:
+        sys.stdout.write(
+            STORAGE_FILE.read_text(encoding="utf-8")
+        )
+    except OSError as exc:
+        print(f"could not read store: {exc}", file=sys.stderr)
+        return 1
+
+    return 0
+
+
+# ============================================================
+# Fish integration
+# ============================================================
+
+def init_fish() -> int:
+    """
+    Generate the fish function that allows remember to change the
+    parent shell's working directory.
+    """
+    script = str(Path(__file__).resolve())
+
+    print(f'''\
+function remember
+    set -l action $argv[1]
+
+    switch "$action"
+        case "" goto go
+            set -l target ("{script}" __goto $argv[2..-1])
+
+            if test $status -eq 0; and test -n "$target"; and test -d "$target"
+                cd -- "$target"
+            end
+
+        case '*'
+            "{script}" $argv
+    end
+end
+''')
+
+    return 0
+
+
+# ============================================================
+# Main
+# ============================================================
+
+def main() -> int:
+    global REMEMBER_STORE_DIR
+    global STORAGE_FILE
+
+    args = sys.argv[1:]
+
+    # --------------------------------------------------------
+    # Shell integration
+    # --------------------------------------------------------
+
+    if args and args[0] == "init":
+        if len(args) == 2 and args[1] == "fish":
+            return init_fish()
+
+        print("usage: remember init fish", file=sys.stderr)
+        return 1
+
+    # --------------------------------------------------------
+    # Internal navigation command
+    #
+    # Used exclusively by the generated shell integration.
+    # It MUST print only the target path.
+    # --------------------------------------------------------
+
+    if args and args[0] == "__goto":
+        goto_args = args[1:]
+
+        # Internal command uses the same .remrc behavior as normal goto.
+        use_remrc()
+
+        if not ensure_storage():
+            return 1
+
+        if not goto_args:
+            target = resolve_goto_fuzzy()
+        elif len(goto_args) == 1 and goto_args[0].isdigit():
+            target = resolve_goto_index(int(goto_args[0]))
+        elif len(goto_args) == 1 and goto_args[0] in {"goto", "go"}:
+            target = resolve_goto_fuzzy()
+        else:
+            return 1
+
+        if target is None:
+            return 1
+
+        print(target)
+        return 0
+
+    # --------------------------------------------------------
+    # Argument validation
+    # --------------------------------------------------------
+
+    if len(args) > 2:
+        print("too many arguments")
+        print("check docs with: remember help")
+        return 1
+
+    action = args[0] if args else ""
+    argument = args[1] if len(args) == 2 else ""
+
+    # --------------------------------------------------------
+    # "default" bypasses .remrc
+    # --------------------------------------------------------
+
+    if action in {"d", "def", "default"}:
+        action = argument
+    else:
+        use_remrc()
+
+    # --------------------------------------------------------
+    # Store initialization
+    # --------------------------------------------------------
+
+    if not ensure_storage():
+        return 1
+
+    # --------------------------------------------------------
+    # Dispatch
+    # --------------------------------------------------------
+
+    if action in {"", "g", "go", "goto"}:
+        return goto_dir()
+
+    if action in {"l", "ls", "ll", "list"}:
+        return list_store()
+
+    if action in {"c", "cr", "create", "rc", "create-rc"}:
+        return create_rc_file()
+
+    if action in {"a", "add", "new"}:
+        return add_to_store()
+
+    if action in {"r", "rm", "remove", "del", "delete"}:
+        return remove_pwd_from_store()
+
+    if action in {"rmf", "rm-fuzz", "remove-fuzz"}:
+        return remove_from_store()
+
+    if action in {"rma", "rmx", "remove-all", "nuke"}:
+        return remove_all_from_store()
+
+    if action in {"e", "ed", "edit"}:
+        return open_in_editor()
+
+    if action.isdigit():
+        return goto_index(action)
+
+    if action in {"h", "help", "--help"}:
+        help_menu()
+        return 0
+
+    print("invalid <action> argument")
+    print("check docs with: remember help")
+    return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

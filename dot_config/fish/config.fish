@@ -13,6 +13,9 @@ if status is-interactive
 	# dev tools and environment manager
 	mise activate fish | source
 
+	# my directory bookmarking tool
+	remember init fish | source
+
 	# has to be near the end (zellij is the only exception)
 	zoxide init fish --cmd chd | source
 

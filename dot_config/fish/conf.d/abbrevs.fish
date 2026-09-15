@@ -27,18 +27,8 @@ abbr -a lgit lazygit
 abbr -a legit lazygit
 
 #[[ custom remember script ]]
+abbr -a r remember
 abbr -a rem remember
-abbr -a r ". remember goto"
-abbr -a r1 ". remember 1"
-abbr -a r2 ". remember 2"
-abbr -a r3 ". remember 3"
-abbr -a r4 ". remember 4"
-abbr -a r5 ". remember 5"
-abbr -a r6 ". remember 6"
-abbr -a r7 ". remember 7"
-abbr -a r8 ". remember 8"
-abbr -a r9 ". remember 9"
-abbr -a r0 ". remember 0"
 
 #[[ misc ]]
 # abbr -a emul "emulator -avd Pixel_36 -no-metrics"
