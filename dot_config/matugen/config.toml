@@ -1,0 +1,9 @@
+[config]
+
+[templates.yazi]
+input_path = '/home/anir183/.config/matugen/templates/yazi.toml'
+output_path = '/home/anir183/.config/yazi/theme.toml'
+
+[templates.intellij]
+input_path = '/home/anir183/.config/matugen/templates/intellij.json.tera'
+output_path = '/home/anir183/.config/JetBrains/matugen/colors.json'
