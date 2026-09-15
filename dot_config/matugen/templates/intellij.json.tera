@@ -238,7 +238,7 @@
     "XML_ENTITY_REFERENCE":                        { "fg": "{{colors.on_tertiary_container.default.hex | set_lightness: 0.8}}" },
     "XML_PROLOGUE":                                { "fg": "{{colors.outline.default.hex}}" },
     "XML_TAG":                                     { "fg": "{{colors.on_surface_variant.default.hex}}" },
-    "XML_TAG_NAME":                                { "fg": "{{colors.primary_fixed_dim.default.hex | set_lightness: 0.8}}" },
+    "XML_TAG_NAME":                                { "fg": "{{colors.tertiary_fixed_dim.default.hex | to_color | blend: {{ "#ffbf00" | to_color }}, 0.85}}", "bold": true },
 
     "REGEXP.BRACES":                               { "fg": "{{colors.on_surface_variant.default.hex}}" },
     "REGEXP.BRACKETS":                             { "fg": "{{colors.on_surface_variant.default.hex}}" },
