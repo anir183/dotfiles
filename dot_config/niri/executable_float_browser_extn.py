@@ -28,6 +28,11 @@ RULES = [
         "width": "30%",
         "height": "60%",
     },
+    {
+        "pattern": re.compile(r"^Sign in .* Google Accounts .*"),
+        "width": "45%",
+        "height": "55%",
+    },
 ]
 
 

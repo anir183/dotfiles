@@ -130,13 +130,14 @@ window-rule { // floating
 	match app-id="jetbrains-idea" title="Welcome to IntelliJ IDEA"
 	match app-id="app.zen_browser.zen" title="^Picture-in-Picture$"
 	match app-id="jetbrains-studio" title="Welcome to Android Studio"
-	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"# title="gameStarting"
+	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"#
 	open-floating true
 }
 window-rule { // non-floating
 	match app-id="zoom" title="Meeting"
 	match app-id=r#"org.quickshell$"#
 	match app-id=r#"com.danklinux.dms$"#
+	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"# title="OnlineFix Linux Launcher"
 	match app-id="Emulator"
 	open-floating false
 }
