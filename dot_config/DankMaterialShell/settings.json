@@ -14,6 +14,61 @@
   "modalAnimationSpeed": 0,
   "animationVariant": 1,
   "barElevationEnabled": false,
+  "controlCenterWidgets": [
+    {
+      "id": "volumeSlider",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "inputVolumeSlider",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "wifi",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "bluetooth",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "audioOutput",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "audioInput",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "diskUsage",
+      "enabled": true,
+      "width": 50,
+      "instanceId": "mu9nfarxb627u1etpnvugu0f831y8",
+      "mountPath": "/",
+      "showMountPath": true
+    },
+    {
+      "id": "battery",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "doNotDisturb",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "idleInhibitor",
+      "enabled": true,
+      "width": 50
+    }
+  ],
   "showOccupiedWorkspacesOnly": true,
   "greeterAutoLogin": true,
   "greeterWallpaperPath": "/home/anir183/media/pictures/wallpapers/girl_watch_beetle_fight.jpg",
