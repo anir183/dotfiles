@@ -1,12 +1,5 @@
 #!/usr/bin/env fish
 
-#[[ neovim and vim ]]
-abbr -a mvim "nvim --cmd \"let g:MODE_183='minimal'\""
-abbr -a mpvim "nvim --cmd \"let g:MODE_183='minimal-plugin'\""
-abbr -a mdvim "nvim --cmd \"let g:MODE_183='minimal-dev'\""
-abbr -a npvim "nvim --cmd \"let g:MODE_183='no-plugin'\""
-abbr -a leet "nvim leetcode.nvim"
-
 #[[ eza list commands ]]
 abbr -a el "eza -F -a"
 abbr -a ell "eza -F -l"

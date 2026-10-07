@@ -64,9 +64,7 @@ fish_add_path --prepend "$XDG_DATA_HOME/JetBrains/Toolbox/scripts"
 
 # NOTE: needs this order
 set -gx PATH \
-	"$HOME/.local/bin" \
-	"$HOME/.local/scripts" \
-	"$XDG_DATA_HOME/nvim/mason/bin" \
-	"$PATH"
-
-
+    "$HOME/.local/bin" \
+    "$HOME/.local/scripts" \
+    "$PATH" \
+    "$XDG_DATA_HOME/nvim/mason/bin"
