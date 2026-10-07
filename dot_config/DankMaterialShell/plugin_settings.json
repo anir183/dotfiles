@@ -9,6 +9,8 @@
   },
   "quickCapture": {
     "enabled": true,
-    "screenshotBackend": "dms"
+    "screenshotBackend": "dms",
+    "saveDirectory": "/home/anir183/media/pictures/screenshots",
+    "doneAction": "both"
   }
 }
