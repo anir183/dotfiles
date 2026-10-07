@@ -1,7 +1,7 @@
 binds {
     Ctrl+Alt+Delete repeat=false hotkey-overlay-title="task manager" { spawn "dms" "ipc" "call" "processlist" "focusOrToggle"; }
     Ctrl+Shift+Escape repeat=false hotkey-overlay-title="task manager" { spawn "dms" "ipc" "call" "processlist" "focusOrToggle"; }
-    Ctrl+Shift+R repeat=false hotkey-overlay-title="rename workspace" { spawn "dms" "ipc" "call" "workspace-rename" "open"; }
+    Mod+Alt+R repeat=false hotkey-overlay-title="rename workspace" { spawn "dms" "ipc" "call" "workspace-rename" "open"; }
     Ctrl+XF86AudioLowerVolume allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "decrement" "1"; }
     Ctrl+XF86AudioRaiseVolume allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "increment" "1"; }
     Mod+Alt+L repeat=false hotkey-overlay-title="lock screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
@@ -141,7 +141,8 @@ binds {
     Mod+Ctrl+Shift+C repeat=false hotkey-overlay-title="eye dropper" { spawn "flatpak" "run" "com.github.finefindus.eyedropper"; }
     Mod+E repeat=false hotkey-overlay-title="open file explorer" { spawn "nautilus"; }
     Mod+Return hotkey-overlay-title="open terminal" repeat=false { spawn "ghostty"; }
-    Mod+Ctrl+Return hotkey-overlay-title="open mux sessions" { spawn "dms" "ipc" "tmux" "open"; }
+    Mod+Ctrl+Return hotkey-overlay-title="open neovide" repeat=false { spawn "neovide"; }
+    Mod+Alt+Return hotkey-overlay-title="open mux sessions" { spawn "dms" "ipc" "tmux" "open"; }
     Mod+Shift+M hotkey-overlay-title="mission center" repeat=false { spawn "flatpak" "run" "io.missioncenter.MissionCenter"; }
     Mod+Shift+Return hotkey-overlay-title="open browser" repeat=false { spawn "flatpak" "run" "app.zen_browser.zen"; }
     Mod+Ctrl+Shift+S repeat=false hotkey-overlay-title="gradia screenshot" { spawn "sh" "-c" "flatpak run be.alexandervanhee.gradia"; }

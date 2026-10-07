@@ -88,6 +88,7 @@ window-rule { // blurred
 	match app-id="Alacritty"
 	match app-id="com.mitchellh.ghostty"
 	match app-id=r#"^org\.wezfurlong\.wezterm$"#
+	match app-id="dev.zed.Zed"
 	draw-border-with-background false
 	default-column-width { proportion 0.8; }
 	background-effect {
@@ -127,10 +128,13 @@ window-rule { // floating
 	match app-id=r#"^org\.gnome\.Calculator$"#
 	match app-id="app.zen_browser.zen" title="^$"
 	match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-	match app-id="jetbrains-idea" title="Welcome to IntelliJ IDEA"
 	match app-id="app.zen_browser.zen" title="^Picture-in-Picture$"
-	match app-id="jetbrains-studio" title="Welcome to Android Studio"
+	match app-id="jetbrains-idea" title="^Welcome to IntelliJ IDEA$"
+	match app-id="jetbrains-idea" title="^Setting*"
+	match app-id="jetbrains-studio" title="^Welcome to Android Studio$"
+	match app-id="jetbrains-studio" title="^Settings*"
 	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"#
+	match app-id="dev.zed.Zed" title="Zed — Settings"
 	open-floating true
 }
 window-rule { // non-floating
@@ -138,6 +142,8 @@ window-rule { // non-floating
 	match app-id=r#"org.quickshell$"#
 	match app-id=r#"com.danklinux.dms$"#
 	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"# title="OnlineFix Linux Launcher"
+	match app-id="jetbrains-idea" title="^$"
+	match app-id="jetbrains-studio" title="^$"
 	match app-id="Emulator"
 	open-floating false
 }
