@@ -3,7 +3,7 @@
 set -gx fish_greeting
 set -gx fish_key_bindings fish_vi_key_bindings
 
-set -gx EDITOR nvim
+set -gx EDITOR zeditor
 
 #[[ xdg runtime directories ]]
 set -gx XDG_CONFIG_HOME $HOME/.config

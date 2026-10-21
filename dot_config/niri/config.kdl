@@ -89,6 +89,7 @@ window-rule { // blurred
 	match app-id="com.mitchellh.ghostty"
 	match app-id=r#"^org\.wezfurlong\.wezterm$"#
 	match app-id="dev.zed.Zed"
+	match app-id="neovide"
 	draw-border-with-background false
 	default-column-width { proportion 0.8; }
 	background-effect {
@@ -135,6 +136,8 @@ window-rule { // floating
 	match app-id="jetbrains-studio" title="^Settings*"
 	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"#
 	match app-id="dev.zed.Zed" title="Zed — Settings"
+	match app-id="Unityhub-unity-editor-6000.6.5f1" title="Project Upgrade Required"
+	match app-id="org.kde.kfontinst"
 	open-floating true
 }
 window-rule { // non-floating

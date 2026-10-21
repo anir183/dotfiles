@@ -1,0 +1,6 @@
+[font]
+normal = [{ family = "Lilex Nerd Font Mono" }]
+size = 11.0
+
+[font.features]
+"Lilex Nerd Font Mono" = ["+calt", "+liga"]

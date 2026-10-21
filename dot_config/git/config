@@ -35,3 +35,5 @@
 
 [mergetool "nvimdiff"]
 	layout = "LOCAL,BASE,REMOTE / MERGED"
+[credential]
+	helper = /usr/lib/git-core/git-credential-libsecret

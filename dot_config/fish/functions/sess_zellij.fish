@@ -111,7 +111,7 @@ function sess_zellij --description "smart zellij session manager"
 			string replace "[EXITED] " "" -- $selection
 		)
 
-		zellij attach -c -- "$clean"
+		zellij attach -c "$clean"
 		return
 	end
 
@@ -154,7 +154,7 @@ function sess_zellij --description "smart zellij session manager"
 			string replace "[EXITED] " "" -- $selection
 		)
 
-		zellij attach -c -- "$clean"
+		zellij attach -c "$clean"
 		return
 	end
 
@@ -163,7 +163,7 @@ function sess_zellij --description "smart zellij session manager"
 	# attach immediately
 	# -----------------------------
 	if test $running_count -eq 1
-		zellij attach -c -- "$running_sessions[1]"
+		zellij attach -c "$running_sessions[1]"
 		return
 	end
 

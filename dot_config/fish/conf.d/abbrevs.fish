@@ -29,6 +29,8 @@ abbr -a chist "mv $XDG_DATA_HOME/fish/fish_history $XDG_DATA_HOME/fish/fish_hist
 abbr -a :q exit
 
 #[[ functions ]]
+abbr -a detach-run detach_run
+
 abbr -a sess-zellij sess_zellij
 abbr -a sess "sess_zellij --all"
 

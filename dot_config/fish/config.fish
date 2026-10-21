@@ -18,9 +18,6 @@ if status is-interactive
 
 	# has to be near the end (zellij is the only exception)
 	zoxide init fish --cmd chd | source
-
-	# start zellij session
-	sess_zellij
 else
 	# dev tools and environment manager
 	mise activate fish --shims | source
