@@ -141,7 +141,7 @@ binds {
     Mod+Ctrl+Shift+C repeat=false hotkey-overlay-title="eye dropper" { spawn "flatpak" "run" "com.github.finefindus.eyedropper"; }
     Mod+E repeat=false hotkey-overlay-title="open file explorer" { spawn "nautilus"; }
     Mod+Return hotkey-overlay-title="open terminal" repeat=false { spawn "ghostty"; }
-    Mod+Ctrl+Return hotkey-overlay-title="open neovide" repeat=false { spawn "neovide"; }
+    Mod+Ctrl+Return hotkey-overlay-title="open neovide" repeat=false { spawn "Neovide.AppImage"; }
     Mod+Alt+Return hotkey-overlay-title="open mux sessions" { spawn "dms" "ipc" "tmux" "open"; }
     Mod+Shift+M hotkey-overlay-title="mission center" repeat=false { spawn "flatpak" "run" "io.missioncenter.MissionCenter"; }
     Mod+Shift+Return hotkey-overlay-title="open browser" repeat=false { spawn "flatpak" "run" "app.zen_browser.zen"; }

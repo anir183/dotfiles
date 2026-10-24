@@ -9,6 +9,7 @@ M.plugins = {}
 M.lsps = {
     lua_ls = {},
     svelte = {},
+    jdtls = {},
 }
 
 -- :h conform-formatters
@@ -54,5 +55,7 @@ M.cloak = {
         replace = nil,
     },
 }
+
+M.leetpath = "/home/anir183/workspace/sandbox/leetcode"
 
 return M
