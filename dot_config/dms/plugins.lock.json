@@ -1,0 +1,19 @@
+{
+  "lockfileVersion": 1,
+  "plugins": {
+    "dankKDEConnect": {
+      "repo": "https://github.com/AvengeMedia/dms-plugins",
+      "path": "DankKDEConnect",
+      "commit": "69fcc477de31616807bfc6ee03492319cc7e2484"
+    },
+    "dankNotepadModule": {
+      "repo": "https://github.com/AvengeMedia/dms-plugins",
+      "path": "DankNotepadModule",
+      "commit": "69fcc477de31616807bfc6ee03492319cc7e2484"
+    },
+    "quickCapture": {
+      "repo": "https://github.com/hthienloc/dms-quick-capture",
+      "commit": "d9e4475404e29223fd68d60feadf2eab810d098e"
+    }
+  }
+}

@@ -121,7 +121,7 @@ window-rule { // floating
 	match title="Eyedropper"
 	match app-id=r#"^galculator$"#
 	match app-id="it.mijorus.smile"
-	match app-id="com.danklinux.dms"
+	match app-id=r#"^dev\.duxlabs\.shell$"#
 	match app-id=r#"^blueman-manager$"#
 	match app-id=r#"^gnome-calculator$"#
 	match app-id=r#"^xdg-desktop-portal$"#
@@ -143,7 +143,7 @@ window-rule { // floating
 window-rule { // non-floating
 	match app-id="zoom" title="Meeting"
 	match app-id=r#"org.quickshell$"#
-	match app-id=r#"com.danklinux.dms$"#
+	match app-id=r#"^dev\.duxlabs\.shell$"#
 	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"# title="OnlineFix Linux Launcher"
 	match app-id="jetbrains-idea" title="^$"
 	match app-id="jetbrains-studio" title="^$"
