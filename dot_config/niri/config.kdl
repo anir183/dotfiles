@@ -138,6 +138,8 @@ window-rule { // floating
 	match app-id="dev.zed.Zed" title="Zed — Settings"
 	match app-id="Unityhub-unity-editor-6000.6.5f1" title="Project Upgrade Required"
 	match app-id="org.kde.kfontinst"
+	match app-id="GParted"
+	match app-id="org.gnome.DiskUtility"
 	open-floating true
 }
 window-rule { // non-floating
