@@ -393,7 +393,10 @@
       "enabled": true,
       "config": {
         "displayPreferences": [
-          "all"
+          {
+            "name": "HDMI-A-1",
+            "model": "22FHDMEQNNXO"
+          }
         ],
         "syncPositionAcrossScreens": true,
         "style": "expressive",
@@ -404,21 +407,7 @@
         "showDigitalSeconds": false,
         "showAnalogNumbers": false,
         "showAnalogSeconds": true,
-        "autoPosition": true,
-        "colorMode": "default",
-        "customColor": "#ffffff"
-      }
-    },
-    {
-      "id": "lock_date",
-      "widgetType": "lockDate",
-      "enabled": false,
-      "config": {
-        "displayPreferences": [
-          "all"
-        ],
-        "syncPositionAcrossScreens": true,
-        "format": "short",
+        "autoPosition": false,
         "colorMode": "default",
         "customColor": "#ffffff"
       }
@@ -429,7 +418,10 @@
       "enabled": true,
       "config": {
         "displayPreferences": [
-          "all"
+          {
+            "name": "HDMI-A-1",
+            "model": "22FHDMEQNNXO"
+          }
         ],
         "syncPositionAcrossScreens": true,
         "style": "expressive",
@@ -443,7 +435,10 @@
       "enabled": true,
       "config": {
         "displayPreferences": [
-          "all"
+          {
+            "name": "HDMI-A-1",
+            "model": "22FHDMEQNNXO"
+          }
         ],
         "syncPositionAcrossScreens": true,
         "mode": 2
@@ -455,7 +450,10 @@
       "enabled": true,
       "config": {
         "displayPreferences": [
-          "all"
+          {
+            "name": "HDMI-A-1",
+            "model": "22FHDMEQNNXO"
+          }
         ],
         "syncPositionAcrossScreens": true,
         "showMediaPlayer": true,
@@ -464,15 +462,71 @@
       }
     },
     {
-      "id": "lock_power",
-      "widgetType": "lockPower",
-      "enabled": false,
+      "id": "lw_1793111214281_r0udwyc84",
+      "widgetType": "systemMonitor",
+      "name": "System Monitor",
+      "enabled": true,
       "config": {
-        "displayPreferences": [
-          "all"
-        ],
         "syncPositionAcrossScreens": true,
-        "shape": "round"
+        "showHeader": true,
+        "transparency": 1,
+        "colorMode": "primary",
+        "customColor": "#ffffff",
+        "showCpu": true,
+        "showCpuGraph": true,
+        "showCpuTemp": true,
+        "showGpuTemp": true,
+        "gpuPciId": "10de:25ac",
+        "showMemory": true,
+        "showMemoryGraph": true,
+        "showNetwork": true,
+        "showNetworkGraph": true,
+        "showDisk": true,
+        "showTopProcesses": true,
+        "topProcessCount": 10,
+        "topProcessSortBy": "cpu",
+        "layoutMode": "auto",
+        "graphInterval": 600,
+        "displayPreferences": [
+          {
+            "name": "eDP-1",
+            "model": "0x1560"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lw_1793111261871_5hnas7l7l",
+      "widgetType": "lockPower",
+      "name": "Power",
+      "enabled": true,
+      "config": {
+        "syncPositionAcrossScreens": true,
+        "displayPreferences": [
+          {
+            "name": "HDMI-A-1",
+            "model": "22FHDMEQNNXO"
+          }
+        ],
+        "shape": "cookie9"
+      }
+    },
+    {
+      "id": "lw_1793111737997_8zftaow3i",
+      "widgetType": "lockDate",
+      "name": "Date",
+      "enabled": true,
+      "config": {
+        "syncPositionAcrossScreens": true,
+        "displayPreferences": [
+          {
+            "name": "HDMI-A-1",
+            "model": "22FHDMEQNNXO"
+          }
+        ],
+        "format": "short",
+        "colorMode": "default",
+        "customColor": "#ffffff"
       }
     }
   ],
@@ -483,7 +537,10 @@
       "enabled": true,
       "config": {
         "displayPreferences": [
-          "all"
+          {
+            "name": "HDMI-A-1",
+            "model": "22FHDMEQNNXO"
+          }
         ],
         "syncPositionAcrossScreens": true,
         "style": "expressive",
@@ -494,21 +551,7 @@
         "showDigitalSeconds": false,
         "showAnalogNumbers": false,
         "showAnalogSeconds": true,
-        "autoPosition": true,
-        "colorMode": "default",
-        "customColor": "#ffffff"
-      }
-    },
-    {
-      "id": "lock_date",
-      "widgetType": "lockDate",
-      "enabled": false,
-      "config": {
-        "displayPreferences": [
-          "all"
-        ],
-        "syncPositionAcrossScreens": true,
-        "format": "short",
+        "autoPosition": false,
         "colorMode": "default",
         "customColor": "#ffffff"
       }
@@ -519,7 +562,10 @@
       "enabled": true,
       "config": {
         "displayPreferences": [
-          "all"
+          {
+            "name": "HDMI-A-1",
+            "model": "22FHDMEQNNXO"
+          }
         ],
         "syncPositionAcrossScreens": true,
         "style": "expressive",
@@ -533,7 +579,10 @@
       "enabled": true,
       "config": {
         "displayPreferences": [
-          "all"
+          {
+            "name": "HDMI-A-1",
+            "model": "22FHDMEQNNXO"
+          }
         ],
         "syncPositionAcrossScreens": true,
         "showMediaPlayer": true,
@@ -542,15 +591,37 @@
       }
     },
     {
-      "id": "lock_power",
+      "id": "lw_1793111261871_5hnas7l7l",
       "widgetType": "lockPower",
-      "enabled": false,
+      "name": "Power",
+      "enabled": true,
       "config": {
-        "displayPreferences": [
-          "all"
-        ],
         "syncPositionAcrossScreens": true,
-        "shape": "round"
+        "displayPreferences": [
+          {
+            "name": "HDMI-A-1",
+            "model": "22FHDMEQNNXO"
+          }
+        ],
+        "shape": "cookie9"
+      }
+    },
+    {
+      "id": "lw_1793111737997_8zftaow3i",
+      "widgetType": "lockDate",
+      "name": "Date",
+      "enabled": true,
+      "config": {
+        "syncPositionAcrossScreens": true,
+        "displayPreferences": [
+          {
+            "name": "HDMI-A-1",
+            "model": "22FHDMEQNNXO"
+          }
+        ],
+        "format": "short",
+        "colorMode": "default",
+        "customColor": "#ffffff"
       }
     },
     {
@@ -564,5 +635,6 @@
         "syncPositionAcrossScreens": true
       }
     }
-  ]
+  ],
+  "lockScreenShowPowerActions": true
 }
