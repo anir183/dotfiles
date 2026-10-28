@@ -91,7 +91,7 @@ window-rule { // blurred
 	match app-id="dev.zed.Zed"
 	match app-id="neovide"
 	draw-border-with-background false
-	default-column-width { proportion 0.8; }
+	default-column-width { proportion 0.85; }
 	background-effect {
 		xray false
 		blur true
@@ -107,7 +107,9 @@ window-rule { // particular width
 	match app-id="io.github.tobagin.karere"
 	match app-id="io.missioncenter.MissionCenter"
 	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"# title="OnlineFix Linux Launcher"
-	default-column-width { proportion 0.8; }
+	match app-id="com.mediumdev.scancore"
+	match app-id="com.github.th-ch.youtube-music"
+	default-column-width { proportion 0.85; }
 }
 window-rule {
 	match app-id=r#"^org\.gnome\.NautilusPreviewer$"#
