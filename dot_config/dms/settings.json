@@ -246,7 +246,11 @@
           "showMicIcon": false,
           "showMicPercent": false
         },
-        "notificationButton"
+        "notificationButton",
+        {
+          "id": "clipboard",
+          "enabled": true
+        }
       ],
       "spacing": 0,
       "innerPadding": -3,
@@ -373,8 +377,7 @@
   "modalAnimationDuration": 0,
   "dashOptions": {
     "media": {
-      "animatedArt": true,
-      "lyrics": false
+      "animatedArt": true
     }
   },
   "dmsWindowsFloatingSeeded": [
