@@ -23,7 +23,7 @@ M.lsps = {
 }
 
 -- :h conform-formatters
--- https://github.com/stevearc/conform.nvim/blob/master/doc/recipes.md
+-- https://github.com/stevearc/conform.nvim#formatters
 M.formatters = {
     lua = { "stylua" },
     css = { "prettier" },
@@ -42,8 +42,13 @@ M.formatters = {
         "prettier",
     },
     python = { "isort", "ruff_fix", "ruff_format" },
+    java = { "google-java-format" },
 }
-M.custom_formatters = {}
+M.custom_formatters = {
+    ["google-java-format"] = {
+        prepend_args = { "--aosp" },
+    },
+}
 
 -- https://github.com/mfussenegger/nvim-lint#available-linters
 M.linters = {
