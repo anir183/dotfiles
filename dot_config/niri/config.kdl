@@ -109,8 +109,10 @@ window-rule { // particular width
 	match app-id=r#"^org.develnext.jphp.ext.javafx.classes.UXApplication\$CustomApplication"# title="OnlineFix Linux Launcher"
 	match app-id="com.mediumdev.scancore"
 	match app-id="com.github.th-ch.youtube-music"
+	match app-id="io.github.giantpinkrobots.varia"
 	default-column-width { proportion 0.85; }
 }
+
 window-rule {
 	match app-id=r#"^org\.gnome\.NautilusPreviewer$"#
 	default-column-width { proportion 0.75; }
